@@ -7,22 +7,22 @@ from torch.nn import Module
 def create_mu_model(layers_size: List[int], activation_function: Module) -> Module:
     layers = []
 
-    for i in range(0, len(layers_size)-1):
-        layers.append(nn.Linear(in_features=layers_size[i], out_features=layers_size[i+1], bias=True))
-        if i < len(layers_size)-2:
-            layers.append(activation_function())
+    for i in range(0, len(layers_size) - 1):
+        layers.append(nn.Linear(in_features=layers_size[i], out_features=layers_size[i + 1], bias=True))
+        if i < len(layers_size) - 2:
+            layers.append(activation_function)
 
     return nn.Sequential(*layers)
 
 
-def create_sigma_model(layers_size: List[int], inner_activation_function: Module, last_layer_activation_function: Module) -> Module:
+def create_sigma_model(layers_size: List[int]) -> Module:
     layers = []
 
-    for i in range(0, len(layers_size)-1):
-        layers.append(nn.Linear(in_features=layers_size[i], out_features=layers_size[i+1], bias=True))
-        if i < len(layers_size)-2:
-            layers.append(inner_activation_function())
+    for i in range(0, len(layers_size) - 1):
+        layers.append(nn.Linear(in_features=layers_size[i], out_features=layers_size[i + 1], bias=True))
+        if i < len(layers_size) - 2:
+            layers.append(nn.ReLU())
         else:
-            layers.append(last_layer_activation_function())
+            layers.append(nn.Softplus())
 
     return nn.Sequential(*layers)
