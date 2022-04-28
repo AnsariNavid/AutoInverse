@@ -4,7 +4,11 @@ import torch.nn as nn
 from torch.nn import Module
 
 
-def create_mu_model(layers_size: List[int], activation_function: Module) -> Module:
+def create_mu_model(
+            layers_size: List[int],
+            activation_function: Module
+        ) -> Module:
+
     layers = []
 
     for i in range(0, len(layers_size) - 1):
@@ -15,7 +19,10 @@ def create_mu_model(layers_size: List[int], activation_function: Module) -> Modu
     return nn.Sequential(*layers)
 
 
-def create_sigma_model(layers_size: List[int]) -> Module:
+def create_sigma_model(
+            layers_size: List[int]
+        ) -> Module:
+
     layers = []
 
     for i in range(0, len(layers_size) - 1):
