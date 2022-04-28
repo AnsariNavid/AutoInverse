@@ -32,7 +32,6 @@ def test_mu_model(
     mu_model.train()
     print("Mu Model Tested.")
     print()
-    print()
 
 
 def test_sigma_model(
@@ -64,5 +63,4 @@ def test_sigma_model(
     sigma_model.train()
     mu_model.train()
     print("Sigma Model Tested.")
-    print()
     print()
