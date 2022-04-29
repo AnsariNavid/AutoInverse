@@ -63,20 +63,20 @@ def get_mu_model_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
-            id: int
+            model_id: int
         ) -> str:
 
-    return os.path.join(results_base_path, experiment_name, config_name, "mu_model", str(id))
+    return os.path.join(results_base_path, experiment_name, config_name, "mu_model", str(model_id))
 
 
 def get_sigma_model_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
-            id: int
+            model_id: int
         ) -> str:
 
-    return os.path.join(results_base_path, experiment_name, config_name, "sigma_model", str(id))
+    return os.path.join(results_base_path, experiment_name, config_name, "sigma_model", str(model_id))
 
 
 def get_inversion_directory(
