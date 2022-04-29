@@ -14,13 +14,13 @@ def _train_mu_model_one_epoch(
             mu_model: Module,
             criterion: Callable[[Tensor, Tensor], Tensor],
             optimizer: Optimizer,
-            train_dataset_loader: DataLoader,
+            train_data_loader: DataLoader,
             epoch_number: int,
             number_of_epochs: int
         ) -> None:
 
     mu_model.train()
-    for batch_number, (data, ground_truth) in enumerate(train_dataset_loader, 1):
+    for batch_number, (data, ground_truth) in enumerate(train_data_loader, 1):
         data = data.to(settings.DEVICE)
         ground_truth = ground_truth.to(settings.DEVICE)
 
@@ -34,7 +34,7 @@ def _train_mu_model_one_epoch(
 
         if batch_number % settings.NUMBER_OF_BATCHES_PER_LOG == 0:
             print(
-                f'Epoch [{epoch_number}/{number_of_epochs}], Batch [{batch_number}/{len(train_dataset_loader)}]',
+                f'Epoch [{epoch_number}/{number_of_epochs}], Batch [{batch_number}/{len(train_data_loader)}]',
                 f'Loss: {loss.item():.{settings.NUMBER_OF_DECIMAL_PLACES}f}'
             )
 
@@ -44,8 +44,8 @@ def train_mu_model(
             criterion: Callable[[Tensor, Tensor], Tensor],
             optimizer: Optimizer,
             learning_rate_scheduler: _LRScheduler,
-            train_dataset_loader: DataLoader,
-            test_dataset_loader: DataLoader,
+            train_data_loader: DataLoader,
+            test_data_loader: DataLoader,
             number_of_epochs: int
         ) -> float:
 
@@ -57,7 +57,7 @@ def train_mu_model(
             mu_model=mu_model,
             criterion=criterion,
             optimizer=optimizer,
-            train_dataset_loader=train_dataset_loader,
+            train_data_loader=train_data_loader,
             epoch_number=epoch_number,
             number_of_epochs=number_of_epochs
         )
@@ -66,7 +66,7 @@ def train_mu_model(
         last_loss = test.test_mu_model(
             mu_model=mu_model,
             criterion=criterion,
-            test_dataset_loader=test_dataset_loader
+            test_data_loader=test_data_loader
         )
         print()
     print("Mu Model Trained.")
@@ -79,14 +79,14 @@ def _train_sigma_model_one_epoch(
             criterion: Callable[[Tensor, Tensor], Tensor],
             sigma_optimizer: Optimizer,
             mu_optimizer: Optimizer,
-            train_dataset_loader: DataLoader,
+            train_data_loader: DataLoader,
             epoch_number: int,
             number_of_epochs: int
         ) -> None:
 
     sigma_model.train()
     mu_model.train()
-    for batch_number, (data, ground_truth) in enumerate(train_dataset_loader, 1):
+    for batch_number, (data, ground_truth) in enumerate(train_data_loader, 1):
         data = data.to(settings.DEVICE)
         ground_truth = ground_truth.to(settings.DEVICE)
 
@@ -105,7 +105,7 @@ def _train_sigma_model_one_epoch(
 
         if batch_number % settings.NUMBER_OF_BATCHES_PER_LOG == 0:
             print(
-                f'Epoch [{epoch_number}/{number_of_epochs}], Batch [{batch_number}/{len(train_dataset_loader)}]',
+                f'Epoch [{epoch_number}/{number_of_epochs}], Batch [{batch_number}/{len(train_data_loader)}]',
                 f'Loss: {loss.item():.{settings.NUMBER_OF_DECIMAL_PLACES}f}'
             )
 
@@ -119,8 +119,8 @@ def train_sigma_model(
             mu_optimizer: Optimizer,
             sigma_learning_rate_scheduler: _LRScheduler,
             mu_learning_rate_scheduler: _LRScheduler,
-            train_dataset_loader: DataLoader,
-            test_dataset_loader: DataLoader,
+            train_data_loader: DataLoader,
+            test_data_loader: DataLoader,
             number_of_epochs: int
         ) -> float:
 
@@ -135,7 +135,7 @@ def train_sigma_model(
             criterion=sigma_criterion,
             sigma_optimizer=sigma_optimizer,
             mu_optimizer=mu_optimizer,
-            train_dataset_loader=train_dataset_loader,
+            train_data_loader=train_data_loader,
             epoch_number=epoch_number,
             number_of_epochs=number_of_epochs
         )
@@ -146,13 +146,13 @@ def train_sigma_model(
             sigma_model=sigma_model,
             mu_model=mu_model,
             criterion=sigma_criterion,
-            test_dataset_loader=test_dataset_loader
+            test_data_loader=test_data_loader
         )
         print()
         test.test_mu_model(
             mu_model=mu_model,
             criterion=mu_criterion,
-            test_dataset_loader=test_dataset_loader
+            test_data_loader=test_data_loader
         )
         print()
     print("Sigma Model Trained.")
