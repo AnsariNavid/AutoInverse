@@ -82,12 +82,12 @@ if __name__ == '__main__':
         "config_name": "",
 
         "mu_model": {
-            "layers_size": [40, 300, 1500, 1500, 300, 206],
+            "layers_size": [4, 100, 500, 500, 100, 2],
             "activation_functions": ["ReLU"],
             "input_data_path": "multi_joint_input.mat",
             "output_data_path": "multi_joint_output.mat",
-            "train_split_ratio": 0.8,
-            "batch_size": 16,
+            "train_split_ratio": 0.9,
+            "batch_size": 10,
             "learning_rate": 0.0005,
             "learning_rate_decay_rate": 0.95,
             "number_of_epochs": 2
