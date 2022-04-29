@@ -71,8 +71,8 @@ def converge_design(
             design: Tensor,
             target: Tensor,
             number_of_iterations: int,
-            minimum_conversion_length: int,
-            conversion_threshold: float,
+            minimum_convergence_length: int,
+            convergence_threshold: float,
         ) -> Tuple[float, Tensor, Tensor, Tensor, Tensor, Tensor]:
 
     print("Converging Design ...")
@@ -111,11 +111,11 @@ def converge_design(
                 sigma_aleatory
             ).detach().clone()
 
-        if len(losses) > minimum_conversion_length:
+        if len(losses) > minimum_convergence_length:
             maximum_difference = max(
-                [abs(loss.item() - previous_loss) for previous_loss in losses[-minimum_conversion_length:]]
+                [abs(loss.item() - previous_loss) for previous_loss in losses[-minimum_convergence_length:]]
             )
-            if maximum_difference <= conversion_threshold:
+            if maximum_difference <= convergence_threshold:
                 break
         losses.append(loss.item())
 
