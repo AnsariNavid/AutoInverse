@@ -1,4 +1,5 @@
 import json
+import os
 
 import scipy.io
 import torch
@@ -48,3 +49,42 @@ def load_data_from_json_file(
     with open(path, 'r') as fp:
         data = json.load(fp)
     return data
+
+
+def create_directory(
+            directory: str
+        ) -> None:
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
+def get_mu_model_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            id: int
+        ) -> str:
+
+    return os.path.join(results_base_path, experiment_name, config_name, "mu_model", str(id))
+
+
+def get_sigma_model_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            id: int
+        ) -> str:
+
+    return os.path.join(results_base_path, experiment_name, config_name, "sigma_model", str(id))
+
+
+def get_inversion_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            repetition_id: int,
+            input_id: int
+        ) -> str:
+
+    return os.path.join(results_base_path, experiment_name, config_name, str(repetition_id), "inversion", str(input_id))
