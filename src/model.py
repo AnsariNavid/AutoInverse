@@ -3,6 +3,8 @@ from typing import List
 import torch.nn as nn
 from torch.nn import Module
 
+from . import settings
+
 
 def create_mu_model(
             layers_size: List[int],
@@ -16,7 +18,7 @@ def create_mu_model(
         if i < len(layers_size) - 2:
             layers.append(activation_function)
 
-    return nn.Sequential(*layers)
+    return nn.Sequential(*layers).to(settings.DEVICE)
 
 
 def create_sigma_model(
@@ -32,4 +34,4 @@ def create_sigma_model(
         else:
             layers.append(nn.Softplus())
 
-    return nn.Sequential(*layers)
+    return nn.Sequential(*layers).to(settings.DEVICE)
