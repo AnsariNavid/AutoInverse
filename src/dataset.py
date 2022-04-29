@@ -21,15 +21,15 @@ def create_tensor_dataset(
     return TensorDataset(*tensors)
 
 
-def get_training_testing_tensor_datasets(
+def get_train_test_tensor_datasets(
             tensor_dataset: TensorDataset,
             train_split_ratio: float
         ) -> Tuple[TensorDataset, TensorDataset]:
 
-    training_size = int(len(tensor_dataset) * train_split_ratio)
-    testing_size = len(tensor_dataset) - training_size
-    training_tensor_dataset, testing_tensor_dataset = random_split(tensor_dataset, [training_size, testing_size])
-    return training_tensor_dataset, testing_tensor_dataset
+    train_size = int(len(tensor_dataset) * train_split_ratio)
+    test_size = len(tensor_dataset) - train_size
+    train_tensor_dataset, test_tensor_dataset = random_split(tensor_dataset, [train_size, test_size])
+    return train_tensor_dataset, test_tensor_dataset
 
 
 def create_data_loader(

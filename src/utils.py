@@ -1,3 +1,5 @@
+import json
+
 import scipy.io
 import torch
 from torch import Tensor
@@ -9,11 +11,7 @@ def save_model(
             path: str
         ) -> None:
 
-    print("Saving Model ...")
     torch.save(model.state_dict(), path)
-    print("Model Saved.")
-    print()
-    print()
 
 
 def load_model(
@@ -21,14 +19,7 @@ def load_model(
             path: str
         ) -> Module:
 
-    print("Loading Model ...")
     model.load_state_dict(torch.load(path))
-    model.eval()
-    for parameter in model.parameters():
-        parameter.requires_grad = False
-    print("Model Loaded.")
-    print()
-    print()
     return model
 
 
@@ -39,3 +30,21 @@ def save_tensor_to_mat_file(
         ) -> None:
 
     scipy.io.savemat(path, {key: tensor.detach().to('cpu').numpy()})
+
+
+def save_data_to_json_file(
+            data: dict,
+            path: str
+        ) -> None:
+
+    with open(path, 'w') as fp:
+        json.dump(data, fp, sort_keys=True, indent=4)
+
+
+def load_data_from_json_file(
+            path: str
+        ) -> dict:
+
+    with open(path, 'r') as fp:
+        data = json.load(fp)
+    return data

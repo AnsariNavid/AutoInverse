@@ -21,19 +21,19 @@ def _converge_design_one_iteration(
             number_of_iterations: int
         ) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
 
-    for sigma_model in sigma_models:
-        sigma_model.eval()
-    for mu_model in mu_models:
-        mu_model.eval()
+    number_of_models = len(sigma_models)
+    for i in range(number_of_models):
+        sigma_models[i].eval()
+        mu_models[i].eval()
 
-    ensembled_outputs = torch.empty(len(sigma_models), design.shape[0], target.shape[1] * 2).to(settings.DEVICE)
+    ensembled_outputs = torch.empty(number_of_models, design.shape[0], target.shape[1] * 2).to(settings.DEVICE)
 
-    for i in range(len(sigma_models)):
+    for i in range(number_of_models):
         ensembled_outputs[i, :, :] = torch.cat((mu_models[i](design), sigma_models[i](design)), 1)
 
-    mu_mean = (1 / len(sigma_models)) * torch.sum(ensembled_outputs[:, :, :target.shape[1]], 0)
-    sigma_aleatory = (1 / len(sigma_models)) * torch.sum(ensembled_outputs[:, :, target.shape[1]:], 0)
-    sigma_epistemic = (1 / len(sigma_models)) * \
+    mu_mean = (1 / number_of_models) * torch.sum(ensembled_outputs[:, :, :target.shape[1]], 0)
+    sigma_aleatory = (1 / number_of_models) * torch.sum(ensembled_outputs[:, :, target.shape[1]:], 0)
+    sigma_epistemic = (1 / number_of_models) * \
         torch.sum(ensembled_outputs[:, :, :target.shape[1]] ** 2 - mu_mean.repeat(10, 1, 1) ** 2, 0)
 
     mse_loss, uncertainty_loss = criterion(
@@ -120,6 +120,4 @@ def converge_design(
         losses.append(loss.item())
 
     print("Design Converged.")
-    print()
-    print()
     return best_loss, best_design, best_mu_mean, best_sigma_epistemic, best_sigma_aleatory, best_no_reduction_loss

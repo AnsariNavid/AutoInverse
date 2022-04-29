@@ -37,7 +37,6 @@ def _train_mu_model_one_epoch(
                 f'Epoch [{epoch_number}/{number_of_epochs}], Batch [{batch_number}/{len(train_dataset_loader)}]',
                 f'Loss: {loss.item():.{settings.NUMBER_OF_DECIMAL_PLACES}f}'
             )
-    print()
 
 
 def train_mu_model(
@@ -48,10 +47,11 @@ def train_mu_model(
             train_dataset_loader: DataLoader,
             test_dataset_loader: DataLoader,
             number_of_epochs: int
-        ) -> None:
+        ) -> float:
 
     print("Training Mu Model ...")
     mu_model.train()
+    last_loss = 0.0
     for epoch_number in range(1, number_of_epochs + 1, 1):
         _train_mu_model_one_epoch(
             mu_model=mu_model,
@@ -61,15 +61,16 @@ def train_mu_model(
             epoch_number=epoch_number,
             number_of_epochs=number_of_epochs
         )
+        print()
         learning_rate_scheduler.step()
-        test.test_mu_model(
+        last_loss = test.test_mu_model(
             mu_model=mu_model,
             criterion=criterion,
             test_dataset_loader=test_dataset_loader
         )
+        print()
     print("Mu Model Trained.")
-    print()
-    print()
+    return last_loss
 
 
 def _train_sigma_model_one_epoch(
@@ -107,7 +108,6 @@ def _train_sigma_model_one_epoch(
                 f'Epoch [{epoch_number}/{number_of_epochs}], Batch [{batch_number}/{len(train_dataset_loader)}]',
                 f'Loss: {loss.item():.{settings.NUMBER_OF_DECIMAL_PLACES}f}'
             )
-    print()
 
 
 def train_sigma_model(
@@ -122,11 +122,12 @@ def train_sigma_model(
             train_dataset_loader: DataLoader,
             test_dataset_loader: DataLoader,
             number_of_epochs: int
-        ) -> None:
+        ) -> float:
 
     print("Training Sigma Model ...")
     sigma_model.train()
     mu_model.train()
+    last_loss = 0.0
     for epoch_number in range(1, number_of_epochs + 1, 1):
         _train_sigma_model_one_epoch(
             sigma_model=sigma_model,
@@ -138,19 +139,21 @@ def train_sigma_model(
             epoch_number=epoch_number,
             number_of_epochs=number_of_epochs
         )
+        print()
         sigma_learning_rate_scheduler.step()
         mu_learning_rate_scheduler.step()
-        test.test_sigma_model(
+        last_loss = test.test_sigma_model(
             sigma_model=sigma_model,
             mu_model=mu_model,
             criterion=sigma_criterion,
             test_dataset_loader=test_dataset_loader
         )
+        print()
         test.test_mu_model(
             mu_model=mu_model,
             criterion=mu_criterion,
             test_dataset_loader=test_dataset_loader
         )
+        print()
     print("Sigma Model Trained.")
-    print()
-    print()
+    return last_loss

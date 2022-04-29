@@ -12,12 +12,12 @@ def test_mu_model(
             mu_model: Module,
             criterion: Callable[[Tensor, Tensor], Tensor],
             test_dataset_loader: DataLoader
-        ) -> None:
+        ) -> float:
 
     print("Testing Mu Model ...")
     mu_model.eval()
+    total_loss = 0.0
     with torch.no_grad():
-        total_loss = 0.0
         for data, ground_truth in test_dataset_loader:
             data = data.to(settings.DEVICE)
             ground_truth = ground_truth.to(settings.DEVICE)
@@ -31,7 +31,7 @@ def test_mu_model(
         print(f'Loss: {total_loss / len(test_dataset_loader):.{settings.NUMBER_OF_DECIMAL_PLACES}f}')
     mu_model.train()
     print("Mu Model Tested.")
-    print()
+    return total_loss / len(test_dataset_loader)
 
 
 def test_sigma_model(
@@ -39,13 +39,13 @@ def test_sigma_model(
             mu_model: Module,
             criterion: Callable[[Tensor, Tensor], Tensor],
             test_dataset_loader: DataLoader
-        ) -> None:
+        ) -> float:
 
     print("Testing Sigma Model ...")
     sigma_model.eval()
     mu_model.eval()
+    total_loss = 0.0
     with torch.no_grad():
-        total_loss = 0.0
         for data, ground_truth in test_dataset_loader:
             data = data.to(settings.DEVICE)
             ground_truth = ground_truth.to(settings.DEVICE)
@@ -63,4 +63,4 @@ def test_sigma_model(
     sigma_model.train()
     mu_model.train()
     print("Sigma Model Tested.")
-    print()
+    return total_loss / len(test_dataset_loader)
