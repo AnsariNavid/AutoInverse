@@ -1,0 +1,40 @@
+{
+    "results_base_path": "results",
+    "experiment_name": "",
+    "config_name": "",
+
+    "mu_model": {
+        "layers_size": [],
+        "activation_functions": [],
+        "input_data_path": "",
+        "output_data_path": "",
+        "train_split_ratio": 0.0,
+        "batch_size": 0,
+        "learning_rate": 0.0,
+        "learning_rate_decay_rate": 0.0,
+        "number_of_epochs": 0
+    },
+
+    "sigma_model": {
+        "layers_size": [],
+        "input_data_path": "",
+        "output_data_path": "",
+        "train_split_ratio": 0.0,
+        "batch_size": 0,
+        "learning_rate": 0.0,
+        "learning_rate_decay_rate": 0.0,
+        "number_of_epochs": 0
+    },
+
+    "inversion": {
+        "target_data_path": "",
+        "epistemic_weight": 0.0,
+        "aleatory_weight": 0.0,
+        "criterion": "",
+        "no_reduction_criterion": "",
+        "learning_rate": 0.0,
+        "number_of_iterations": 0,
+        "minimum_convergence_length": 0,
+        "convergence_threshold": 0.0
+    }
+}

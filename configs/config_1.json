@@ -1,0 +1,40 @@
+{
+    "results_base_path": "results",
+    "experiment_name": "multi_joint_robot",
+    "config_name": "config_1_table_1",
+
+    "mu_model": {
+        "layers_size": [40, 300, 1500, 1500, 300, 206],
+        "activation_functions": ["ReLU"],
+        "input_data_path": "Design_data.mat",
+        "output_data_path": "Prformance_data_noisy.mat",
+        "train_split_ratio": 0.8,
+        "batch_size": 16,
+        "learning_rate": 0.0005,
+        "learning_rate_decay_rate": 0.95,
+        "number_of_epochs": 2
+    },
+
+    "sigma_model": {
+        "layers_size": [40, 300, 1500, 1500, 300, 206],
+        "input_data_path": "Design_data.mat",
+        "output_data_path": "Prformance_data_noisy.mat",
+        "train_split_ratio": 0.8,
+        "batch_size": 16,
+        "learning_rate": 0.00009,
+        "learning_rate_decay_rate": 0.95,
+        "number_of_epochs": 2
+    },
+
+    "inversion": {
+        "target_data_path": "",
+        "epistemic_weight": 0.5,
+        "aleatory_weight": 0.5,
+        "criterion": "softrobot_loss",
+        "no_reduction_criterion": "no_reduction_softrobot_loss",
+        "learning_rate": 0.01,
+        "number_of_iterations": 2,
+        "minimum_convergence_length": 10,
+        "convergence_threshold": 0.0001
+    }
+}
