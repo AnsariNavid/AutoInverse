@@ -27,7 +27,7 @@ def load_model(
 def save_tensor_to_mat_file(
             tensor: Tensor,
             path: str,
-            key: str
+            key: str = 'data'
         ) -> None:
 
     scipy.io.savemat(path, {key: tensor.detach().to('cpu').numpy()})
@@ -83,8 +83,7 @@ def get_inversion_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
-            repetition_id: int,
-            input_id: int
+            repetition_id: int
         ) -> str:
 
-    return os.path.join(results_base_path, experiment_name, config_name, str(repetition_id), "inversion", str(input_id))
+    return os.path.join(results_base_path, experiment_name, config_name, "inversion", str(repetition_id))

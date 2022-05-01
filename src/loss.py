@@ -61,3 +61,31 @@ def no_reduction_softrobot_loss(
     mse_loss = torch.mean((nn.MSELoss(reduction='none'))(tip_position(mu_mean), tip_position(target)), 1)
     uncertainty_loss = (epistemic_weight * sigma_epistemic + aleatory_weight * sigma_aleatory).mean(1)
     return mse_loss + uncertainty_loss
+
+
+def inversion_loss(
+            mu_mean: Tensor,
+            target: Tensor,
+            epistemic_weight: float,
+            sigma_epistemic: Tensor,
+            aleatory_weight: float,
+            sigma_aleatory: Tensor
+        ) -> Tuple[Tensor, Tensor]:
+
+    mse_loss = (nn.MSELoss())(mu_mean, target)
+    uncertainty_loss = (epistemic_weight * sigma_epistemic + aleatory_weight * sigma_aleatory).mean()
+    return mse_loss, uncertainty_loss
+
+
+def no_reduction_inversion_loss(
+            mu_mean: Tensor,
+            target: Tensor,
+            epistemic_weight: float,
+            sigma_epistemic: Tensor,
+            aleatory_weight: float,
+            sigma_aleatory: Tensor
+        ) -> Tensor:
+
+    mse_loss = torch.mean((nn.MSELoss(reduction='none'))(mu_mean, target), 1)
+    uncertainty_loss = (epistemic_weight * sigma_epistemic + aleatory_weight * sigma_aleatory).mean(1)
+    return mse_loss + uncertainty_loss
