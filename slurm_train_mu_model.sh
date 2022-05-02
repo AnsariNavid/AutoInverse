@@ -4,8 +4,8 @@
 #SBATCH -t 15:00
 #SBATCH --gres gpu:1
 #SBATCH --array=0-9
-#SBATCH -o slurm_log/%x-%j-%a.log
-#SBATCH -e slurm_log/%x-%j-%a.err
+#SBATCH -o /HPS/uana/work/slurm_log/%x-%j-%a.log
+#SBATCH -e /HPS/uana/work/slurm_log/%x-%j-%a.err
 
 numberOfModels=10
 configFile=""

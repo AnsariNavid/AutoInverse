@@ -4,8 +4,8 @@
 #SBATCH -t 15:00
 #SBATCH --gres gpu:1
 #SBATCH --array=0-49
-#SBATCH -o slurm_log/%x-%j-%a.log
-#SBATCH -e slurm_log/%x-%j-%a.err
+#SBATCH -o /HPS/uana/work/slurm_log/%x-%j-%a.log
+#SBATCH -e /HPS/uana/work/slurm_log/%x-%j-%a.err
 
 numberOfRepetition=50
 configFile=""
