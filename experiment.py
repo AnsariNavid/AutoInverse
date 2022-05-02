@@ -1,5 +1,6 @@
 import argparse
 import os
+import json
 import time
 from typing import Any
 
@@ -272,6 +273,10 @@ def pars_arguments() -> Any:
 if __name__ == '__main__':
     args = pars_arguments()
     config = src.utils.load_data_from_json_file(path=args.config)
+
+    print(vars(args))
+    print(json.dumps(config, sort_keys=True, indent=4))
+    print()
 
     if args.method == "train_mu_model":
         train_mu_model(config=config, model_id=args.model_id)

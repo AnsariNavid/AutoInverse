@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J <configFile>_train_mu_model
+#SBATCH -J train_mu_model
 #SBATCH -p gpu20
 #SBATCH -t 15:00
 #SBATCH --gres gpu:1
