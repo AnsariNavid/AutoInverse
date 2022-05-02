@@ -275,7 +275,7 @@ if __name__ == '__main__':
     config = src.utils.load_data_from_json_file(path=args.config)
 
     print(vars(args))
-    print(json.dumps(config, sort_keys=True, indent=4))
+    print(json.dumps(config, sort_keys=False, indent=4))
     print()
 
     if args.method == "train_mu_model":
