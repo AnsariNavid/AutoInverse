@@ -16,14 +16,14 @@ def train_mu_model(
         ) -> None:
 
     mu_model = src.model.create_mu_model(
-        layers_size=config['mu_model']['layers_size'],
+        layers_size=[config['input_size']] + config['mu_model']['hidden_layers_size'] + [config['output_size']],
         activation_function=getattr(nn, config['mu_model']['activation_functions'][model_id])()
     )
 
     train_tensor_dataset, test_tensor_dataset = src.dataset.get_train_test_tensor_datasets(
         tensor_dataset=src.dataset.create_tensor_dataset(
-            src.dataset.load_tensor_from_mat_file(path=config['mu_model']['input_data_path']),
-            src.dataset.load_tensor_from_mat_file(path=config['mu_model']['output_data_path'])
+            src.dataset.load_tensor_from_mat_file(path=config['input_data_path']),
+            src.dataset.load_tensor_from_mat_file(path=config['output_data_path'])
         ),
         train_split_ratio=config['mu_model']['train_split_ratio']
     )
@@ -84,7 +84,7 @@ def train_sigma_model(
         ) -> None:
 
     mu_model = src.model.create_mu_model(
-        layers_size=config['mu_model']['layers_size'],
+        layers_size=[config['input_size']] + config['mu_model']['hidden_layers_size'] + [config['output_size']],
         activation_function=getattr(nn, config['mu_model']['activation_functions'][model_id])()
     )
     mu_model_root_path = src.utils.get_mu_model_directory(
@@ -95,12 +95,14 @@ def train_sigma_model(
     )
     mu_model = src.utils.load_model(model=mu_model, path=os.path.join(mu_model_root_path, f'model_{model_id}.pt'))
 
-    sigma_model = src.model.create_sigma_model(layers_size=config['sigma_model']['layers_size'])
+    sigma_model = src.model.create_sigma_model(
+        layers_size=[config['input_size']] + config['sigma_model']['hidden_layers_size'] + [config['output_size']],
+    )
 
     train_tensor_dataset, test_tensor_dataset = src.dataset.get_train_test_tensor_datasets(
         tensor_dataset=src.dataset.create_tensor_dataset(
-            src.dataset.load_tensor_from_mat_file(path=config['sigma_model']['input_data_path']),
-            src.dataset.load_tensor_from_mat_file(path=config['sigma_model']['output_data_path'])
+            src.dataset.load_tensor_from_mat_file(path=config['input_data_path']),
+            src.dataset.load_tensor_from_mat_file(path=config['output_data_path'])
         ),
         train_split_ratio=config['sigma_model']['train_split_ratio']
     )
@@ -175,7 +177,7 @@ def inversion(
     sigma_models = []
     for model_id in range(len(config['mu_model']['activation_functions'])):
         mu_model = src.model.create_mu_model(
-            layers_size=config['mu_model']['layers_size'],
+            layers_size=[config['input_size']] + config['mu_model']['hidden_layers_size'] + [config['output_size']],
             activation_function=getattr(nn, config['mu_model']['activation_functions'][model_id])()
         )
         mu_model_root_path = src.utils.get_mu_model_directory(
@@ -192,7 +194,7 @@ def inversion(
         mu_models.append(mu_model)
 
         sigma_model = src.model.create_sigma_model(
-            layers_size=config['sigma_model']['layers_size'],
+            layers_size=[config['input_size']] + config['sigma_model']['hidden_layers_size'] + [config['output_size']],
         )
         sigma_model_root_path = src.utils.get_sigma_model_directory(
             results_base_path=config['results_base_path'],
@@ -207,8 +209,10 @@ def inversion(
         sigma_model.eval()
         sigma_models.append(sigma_model)
 
-    target = src.dataset.load_tensor_from_mat_file(path=config['inversion']['target_data_path'])
-    design = torch.rand(*target.shape).type(torch.float).to(src.settings.DEVICE).clone().detach().requires_grad_(True)
+    target = src.dataset.load_tensor_from_mat_file(path=config['target_data_path']).to(src.settings.DEVICE)
+    design = torch.rand(
+        target.shape[0], config['input_size']
+    ).type(torch.float).to(src.settings.DEVICE).clone().detach().requires_grad_(True)
 
     optimizer = optim.Adam([design], lr=config['inversion']['learning_rate'])
 

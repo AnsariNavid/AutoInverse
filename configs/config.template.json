@@ -2,12 +2,16 @@
     "results_base_path": "/HPS/uana/work/results",
     "experiment_name": "",
     "config_name": "",
+    "input_data_path": "/HPS/uana/work/data/",
+    "output_data_path": "/HPS/uana/work/data/",
+    "target_data_path": "/HPS/uana/work/data/",
+
+    "model_input_size": 0,
+    "model_output_size": 0,
 
     "mu_model": {
-        "layers_size": [],
+        "hidden_layers_size": [],
         "activation_functions": [],
-        "input_data_path": "/HPS/uana/work/data/",
-        "output_data_path": "/HPS/uana/work/data/",
         "train_split_ratio": 0.0,
         "batch_size": 0,
         "learning_rate": 0.0,
@@ -16,9 +20,7 @@
     },
 
     "sigma_model": {
-        "layers_size": [],
-        "input_data_path": "/HPS/uana/work/data/",
-        "output_data_path": "/HPS/uana/work/data/",
+        "hidden_layers_size": [],
         "train_split_ratio": 0.0,
         "batch_size": 0,
         "learning_rate": 0.0,
@@ -27,8 +29,7 @@
     },
 
     "inversion": {
-        "target_data_path": "/HPS/uana/work/data/",
-        "epistemic_weight": 0.0,
+        "epistemic_weight": 0,
         "aleatory_weight": 0.0,
         "criterion": "",
         "no_reduction_criterion": "",
