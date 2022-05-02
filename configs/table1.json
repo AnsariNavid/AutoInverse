@@ -1,7 +1,7 @@
 {
     "results_base_path": "/HPS/uana/work/results",
     "experiment_name": "multi_joint_robot",
-    "config_name": "table1_tuning_2",
+    "config_name": "table1",
 
     "mu_model": {
         "layers_size": [4, 100, 500, 500, 100, 2],
@@ -28,8 +28,8 @@
 
     "inversion": {
         "target_data_path": "/HPS/uana/work/data/multi_joint_robot/target_performance.mat",
-        "epistemic_weight": 10,
-        "aleatory_weight": 1,
+        "epistemic_weight": 1,
+        "aleatory_weight": 0.1,
         "criterion": "inversion_loss",
         "no_reduction_criterion": "no_reduction_inversion_loss",
         "learning_rate": 0.002,

@@ -1,17 +1,16 @@
 #!/bin/bash
+#SBATCH -J <configFile>_train_sigma_model
+#SBATCH -p gpu20
+#SBATCH -t 15:00
+#SBATCH --gres gpu:1
+#SBATCH --array=0-9
+#SBATCH -o slurm_log/%x-%j-%a.log
+#SBATCH -e slurm_log/%x-%j-%a.err
 
 numberOfModels=10
 configFile=""
 method="train_sigma_model"
-#SBATCH -J (configFile)_train_sigma_model
-#SBATCH -p gpu20
-#SBATCH -t 15:00
-#SBATCH --gres gpu:1
-#SBATCH --array=1-10
-#SBATCH -o slurm_log/slurm-%x-%j-%a.log
-#SBATCH -e slurm_log/slurm-%x-%j-%a.err
-
-currentJob=1
+currentJob=0
 for (( model_id = 0; model_id < $numberOfModels; model_id++ ))
 do
     if [[ $currentJob -eq $SLURM_ARRAY_TASK_ID ]]
