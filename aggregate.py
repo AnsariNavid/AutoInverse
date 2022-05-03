@@ -3,7 +3,7 @@ import os
 import numpy
 import scipy.io
 
-BASE_PATH = ''
+BASE_PATH = r''
 
 
 def load_mat_file(
@@ -25,7 +25,11 @@ def save_mat_file(
 
 def main():
     repetition_ids = sorted(
-        [int(directory) for directory in os.listdir(BASE_PATH) if os.path.isdir(directory) is True]
+        [
+            int(directory)
+            for directory in os.listdir(BASE_PATH)
+            if directory.isdigit() and os.path.isdir(os.path.join(BASE_PATH, directory))
+        ]
     )
 
     total_no_reduction_losses = []
