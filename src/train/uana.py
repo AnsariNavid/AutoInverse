@@ -7,7 +7,7 @@ from torch.optim import Optimizer
 from torch.optim.lr_scheduler import _LRScheduler
 from torch.utils.data import DataLoader
 
-from . import settings, test
+from .. import settings, test
 
 
 def _train_mu_model_one_epoch(
@@ -63,7 +63,7 @@ def train_mu_model(
         )
         print()
         learning_rate_scheduler.step()
-        last_loss = test.test_mu_model(
+        last_loss = test.uana.test_mu_model(
             mu_model=mu_model,
             criterion=criterion,
             test_data_loader=test_data_loader
@@ -142,14 +142,14 @@ def train_sigma_model(
         print()
         sigma_learning_rate_scheduler.step()
         mu_learning_rate_scheduler.step()
-        last_loss = test.test_sigma_model(
+        last_loss = test.uana.test_sigma_model(
             sigma_model=sigma_model,
             mu_model=mu_model,
             criterion=sigma_criterion,
             test_data_loader=test_data_loader
         )
         print()
-        test.test_mu_model(
+        test.uana.test_mu_model(
             mu_model=mu_model,
             criterion=mu_criterion,
             test_data_loader=test_data_loader
