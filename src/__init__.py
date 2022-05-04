@@ -1,2 +1,2 @@
-from . import (dataset, inversion, loss, model, settings, test,  # noqa: F401
-               train, utils)
+from . import (inversion, loss, model, settings, test, train,  # noqa: F401
+               utils)
