@@ -5,7 +5,7 @@ from torch import Tensor
 from torch.nn import Module
 from torch.utils.data import DataLoader
 
-from . import settings
+from .. import settings
 
 
 def test_mu_model(
