@@ -3,7 +3,7 @@ from typing import List
 import torch.nn as nn
 from torch.nn import Module
 
-from . import settings
+from .. import settings
 
 
 def create_mu_model(
