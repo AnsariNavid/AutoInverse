@@ -5,7 +5,7 @@ from torch import Tensor
 from torch.nn import Module
 from torch.optim import Optimizer
 
-from . import settings
+from .. import settings
 
 
 def _converge_design_one_iteration(
@@ -22,19 +22,21 @@ def _converge_design_one_iteration(
         ) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
 
     number_of_models = len(sigma_models)
+    output_size = target.shape[1]
+    batch_size = design.shape[0]
     for i in range(number_of_models):
         sigma_models[i].eval()
         mu_models[i].eval()
 
-    ensembled_outputs = torch.empty(number_of_models, design.shape[0], target.shape[1] * 2).to(settings.DEVICE)
+    ensembled_outputs = torch.empty(number_of_models, batch_size, output_size * 2).to(settings.DEVICE)
 
     for i in range(number_of_models):
         ensembled_outputs[i, :, :] = torch.cat((mu_models[i](design), sigma_models[i](design)), 1)
 
-    mu_mean = (1 / number_of_models) * torch.sum(ensembled_outputs[:, :, :target.shape[1]], 0)
-    sigma_aleatory = (1 / number_of_models) * torch.sum(ensembled_outputs[:, :, target.shape[1]:], 0)
+    mu_mean = (1 / number_of_models) * torch.sum(ensembled_outputs[:, :, :output_size], 0)
+    sigma_aleatory = (1 / number_of_models) * torch.sum(ensembled_outputs[:, :, output_size:], 0)
     sigma_epistemic = (1 / number_of_models) * \
-        torch.sum(ensembled_outputs[:, :, :target.shape[1]] ** 2 - mu_mean.repeat(10, 1, 1) ** 2, 0)
+        torch.sum(ensembled_outputs[:, :, :output_size] ** 2 - mu_mean.repeat(number_of_models, 1, 1) ** 2, 0)
 
     mse_loss, uncertainty_loss = criterion(
         mu_mean,
