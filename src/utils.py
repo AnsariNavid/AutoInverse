@@ -1,10 +1,27 @@
 import json
 import os
+from typing import Tuple
 
 import scipy.io
 import torch
 from torch import Tensor
 from torch.nn import Module
+from torch.utils.data import TensorDataset, random_split
+
+
+def save_mat_file(
+            data: dict,
+            path: str,
+        ) -> None:
+
+    scipy.io.savemat(path, data)
+
+
+def load_mat_file(
+            path: str
+        ) -> dict:
+
+    return scipy.io.loadmat(path)
 
 
 def save_model(
@@ -30,25 +47,44 @@ def save_tensor_to_mat_file(
             key: str = 'data'
         ) -> None:
 
-    scipy.io.savemat(path, {key: tensor.detach().to('cpu').numpy()})
+    save_mat_file(data={key: tensor.detach().to('cpu').numpy()}, path=path)
 
 
-def save_data_to_json_file(
+def load_tensor_from_mat_file(
+            path: str,
+            key: str = 'data'
+        ) -> Tensor:
+
+    return torch.from_numpy(load_mat_file(path=path)[key]).float()
+
+
+def save_json_file(
             data: dict,
             path: str
         ) -> None:
 
-    with open(path, 'w') as fp:
-        json.dump(data, fp, sort_keys=True, indent=4)
+    with open(path, 'w') as f:
+        json.dump(data, f, sort_keys=True, indent=4)
 
 
-def load_data_from_json_file(
+def load_json_file(
             path: str
         ) -> dict:
 
-    with open(path, 'r') as fp:
-        data = json.load(fp)
+    with open(path, 'r') as f:
+        data = json.load(f)
     return data
+
+
+def get_train_test_tensor_datasets(
+            tensor_dataset: TensorDataset,
+            train_split_ratio: float
+        ) -> Tuple[TensorDataset, TensorDataset]:
+
+    train_size = int(len(tensor_dataset) * train_split_ratio)
+    test_size = len(tensor_dataset) - train_size
+    train_tensor_dataset, test_tensor_dataset = random_split(tensor_dataset, [train_size, test_size])
+    return train_tensor_dataset, test_tensor_dataset
 
 
 def create_directory(
@@ -59,31 +95,43 @@ def create_directory(
         os.makedirs(directory)
 
 
-def get_mu_model_directory(
+def get_uana_mu_model_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
             model_id: int
         ) -> str:
 
-    return os.path.join(results_base_path, experiment_name, config_name, "mu_model", str(model_id))
+    return os.path.join(results_base_path, experiment_name, config_name, "uana", "mu_model", str(model_id))
 
 
-def get_sigma_model_directory(
+def get_uana_sigma_model_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
             model_id: int
         ) -> str:
 
-    return os.path.join(results_base_path, experiment_name, config_name, "sigma_model", str(model_id))
+    return os.path.join(results_base_path, experiment_name, config_name, "uana", "sigma_model", str(model_id))
 
 
-def get_inversion_directory(
+def get_uana_inversion_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
-            repetition_id: int
+            epistemic_weight: float,
+            aleatory_weight: float,
+            experiment_repetition_id: int,
+            inversion_repetition_id: int
         ) -> str:
 
-    return os.path.join(results_base_path, experiment_name, config_name, "inversion", str(repetition_id))
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "uana",
+        "inversion",
+        f"{str(epistemic_weight)}_{str(aleatory_weight)}",
+        str(experiment_repetition_id),
+        str(inversion_repetition_id)
+    )
