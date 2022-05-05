@@ -3,7 +3,7 @@ from typing import Tuple
 import numpy
 
 
-def determine_final_position(
+def _determine_final_position(
             origin_position: numpy.ndarray,
             arm_angles: numpy.ndarray
         ) -> Tuple[numpy.ndarray, numpy.ndarray]:
@@ -27,3 +27,19 @@ def determine_final_position(
         positions.append(numpy.copy(current_position))
 
     return current_position, numpy.array(positions)
+
+
+def get_re_simulation_error(
+            designs: numpy.ndarray
+        ) -> float:
+
+    current_positions, _ = _determine_final_position(origin_position=designs[:, 0], arm_angles=designs[:, 1:])
+    return (numpy.square(designs - current_positions)).mean()
+
+
+def get_surrogate_error(
+            designs: numpy.ndarray,
+            targets: numpy.ndarray
+        ) -> float:
+
+    return (numpy.square(designs - targets)).mean()

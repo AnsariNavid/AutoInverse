@@ -1,12 +1,13 @@
 import os
 import time
+import numpy
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
-from .. import inversion, loss, model, settings, train, utils
+from .. import inversion, loss, model, settings, train, utils, oracle
 
 
 def train_mu_model(
@@ -225,8 +226,8 @@ def inverse_design(
         mu_models=mu_models,
         epistemic_weight=config['uana']['inversion']['epistemic_weight'],
         aleatory_weight=config['uana']['inversion']['aleatory_weight'],
-        criterion=getattr(loss, config['uana']['inversion']['criterion']),
-        no_reduction_criterion=getattr(loss, config['uana']['inversion']['no_reduction_criterion']),
+        criterion=getattr(loss.uana, config['uana']['inversion']['criterion']),
+        no_reduction_criterion=getattr(loss.uana, config['uana']['inversion']['no_reduction_criterion']),
         optimizer=optimizer,
         design=design,
         target=target,
@@ -260,9 +261,135 @@ def inverse_design(
     utils.save_tensor_to_mat_file(tensor=no_reduction_loss, path=os.path.join(root_path, 'no_reduction_loss.mat'))
 
 
-def aggregate_results() -> None:
-    pass
+def aggregate_results(
+            config: dict,
+            experiment_repetition_id: int
+        ) -> None:
+
+    root_path = utils.get_uana_inversion_directory(
+        results_base_path=config['results_base_path'],
+        experiment_name=config['experiment_name'],
+        config_name=config['config_name'],
+        epistemic_weight=config['uana']['inversion']['epistemic_weight'],
+        aleatory_weight=config['uana']['inversion']['aleatory_weight'],
+        experiment_repetition_id=experiment_repetition_id,
+        inversion_repetition_id=0
+    )
+    root_path = os.path.dirname(root_path)
+
+    repetition_ids = sorted(
+        [
+            int(directory)
+            for directory in os.listdir(root_path)
+            if directory.isdigit() and os.path.isdir(os.path.join(root_path, directory))
+        ]
+    )
+
+    total_no_reduction_losses = []
+    for i in range(len(repetition_ids)):
+        repetition_id = repetition_ids[i]
+        total_no_reduction_losses.append(
+            utils.load_mat_file(path=os.path.join(root_path, str(repetition_id), 'no_reduction_loss.mat'))['data']
+        )
+    total_no_reduction_losses = numpy.array(total_no_reduction_losses).T
+    batch_size = total_no_reduction_losses.shape[0]
+
+    best_repetition_id_per_element = []
+    best_design = []
+    best_no_reduction_loss = []
+    best_performance = []
+    best_sigma_aleatory = []
+    best_sigma_epistemic = []
+    for element_id in range(batch_size):
+        best_repetition_id = numpy.argmin(total_no_reduction_losses[element_id, :])
+
+        best_repetition_id_per_element.append(best_repetition_id)
+        best_design.append(
+            utils.load_mat_file(
+                path=os.path.join(root_path, str(best_repetition_id), 'design.mat')
+            )['data'][element_id, :]
+        )
+        best_no_reduction_loss.append(
+            utils.load_mat_file(
+                path=os.path.join(root_path, str(best_repetition_id), 'no_reduction_loss.mat')
+            )['data'][0, element_id]
+        )
+        best_performance.append(
+            utils.load_mat_file(
+                path=os.path.join(root_path, str(best_repetition_id), 'performance.mat')
+            )['data'][element_id, :]
+        )
+        best_sigma_aleatory.append(
+            utils.load_mat_file(
+                path=os.path.join(root_path, str(best_repetition_id), 'sigma_aleatory.mat')
+            )['data'][element_id, :]
+        )
+        best_sigma_epistemic.append(
+            utils.load_mat_file(
+                path=os.path.join(root_path, str(best_repetition_id), 'sigma_epistemic.mat')
+            )['data'][element_id, :]
+        )
+
+    aggregated_results_base_path = os.path.join(root_path, 'aggregated')
+    if not os.path.exists(aggregated_results_base_path):
+        os.makedirs(aggregated_results_base_path)
+
+    utils.save_mat_file(
+        data=numpy.array(best_repetition_id_per_element),
+        path=os.path.join(aggregated_results_base_path, 'repetition_id_per_element.mat'),
+    )
+    utils.save_mat_file(
+        data=numpy.array(best_design),
+        path=os.path.join(aggregated_results_base_path, 'design.mat'),
+    )
+    utils.save_mat_file(
+        data=numpy.array(best_no_reduction_loss),
+        path=os.path.join(aggregated_results_base_path, 'no_reduction_loss.mat'),
+    )
+    utils.save_mat_file(
+        data=numpy.array(best_performance),
+        path=os.path.join(aggregated_results_base_path, 'performance.mat'),
+    )
+    utils.save_mat_file(
+        data=numpy.array(best_sigma_aleatory),
+        path=os.path.join(aggregated_results_base_path, 'sigma_aleatory.mat'),
+    )
+    utils.save_mat_file(
+        data=numpy.array(best_sigma_epistemic),
+        path=os.path.join(aggregated_results_base_path, 'sigma_epistemic.mat'),
+    )
 
 
-def validate() -> None:
-    pass
+def validate(
+            config: dict,
+            experiment_repetition_id: int
+        ) -> None:
+
+    root_path = utils.get_uana_inversion_directory(
+        results_base_path=config['results_base_path'],
+        experiment_name=config['experiment_name'],
+        config_name=config['config_name'],
+        epistemic_weight=config['uana']['inversion']['epistemic_weight'],
+        aleatory_weight=config['uana']['inversion']['aleatory_weight'],
+        experiment_repetition_id=experiment_repetition_id,
+        inversion_repetition_id=0
+    )
+    root_path = os.path.join(os.path.dirname(root_path), 'aggregated')
+
+    designs = utils.load_mat_file(path=os.path.join(root_path, 'design.mat'))['data']
+    targets = utils.load_mat_file(path=config['target_data_path'])['data']
+
+    re_simulation_error = getattr(
+        getattr(oracle, config['experiment_name']),
+        'get_re_simulation_error'
+    )(designs=designs)
+    surrogate_error = getattr(
+        getattr(oracle, config['experiment_name']),
+        'get_surrogate_error'
+    )(designs=designs, targets=targets)
+
+    data = {
+        "re_simulation_error": re_simulation_error,
+        "surrogate_error": surrogate_error
+    }
+    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.mat'))
