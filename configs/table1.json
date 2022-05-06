@@ -41,10 +41,10 @@
     },
     "na": {
         "forward_model": {
-            "hidden_layers_size": [100, 500, 500, 100],
+            "hidden_layers_size": [100, 1000, 1500, 1000, 100],
             "train_split_ratio": 0.9,
             "batch_size": 10,
-            "learning_rate": 0.0005,
+            "learning_rate": 0.001,
             "learning_rate_decay_rate": 0.95,
             "number_of_epochs": 50
         },

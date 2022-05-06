@@ -10,7 +10,7 @@ def pars_arguments() -> Any:
 
     parser.add_argument('-c', '--config', type=str, required=True)
     parser.add_argument('-m', '--method', type=str, required=True,
-                        choices=['uana'])
+                        choices=['uana', 'na', 'nae'])
     parser.add_argument('-s', '--step', type=str, required=True)
 
     parser.add_argument('-n', '--model_id', type=int, required=False)
@@ -29,6 +29,41 @@ def pars_arguments() -> Any:
                 parser.error("--model_id is required.")
 
         elif args.step == 'inverse_design':
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
+                parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
+
+        elif args.step == 'aggregate_results':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        elif args.step == 'validate':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        else:
+            parser.error("invalid --step.")
+
+    if args.method == 'na':
+        if args.step == 'train_forward_model':
+            pass
+
+        elif args.step == 'inverse_design':
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
+                parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
+
+        elif args.step == 'aggregate_results':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        elif args.step == 'validate':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        else:
+            parser.error("invalid --step.")
+
+    if args.method == 'nae':
+        if args.step == 'inverse_design':
             if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
@@ -82,6 +117,51 @@ if __name__ == '__main__':
 
         elif args.step == 'validate':
             src.method.uana.validate(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+    if args.method == 'na':
+        if args.step == 'train_forward_model':
+            src.method.na.train_forward_model(
+                config=config
+            )
+
+        elif args.step == 'inverse_design':
+            src.method.na.inverse_design(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id,
+                inversion_repetition_id=args.inversion_repetition_id
+            )
+
+        elif args.step == 'aggregate_results':
+            src.method.na.aggregate_results(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+        elif args.step == 'validate':
+            src.method.na.validate(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+    if args.method == 'nae':
+        if args.step == 'inverse_design':
+            src.method.nae.inverse_design(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id,
+                inversion_repetition_id=args.inversion_repetition_id
+            )
+
+        elif args.step == 'aggregate_results':
+            src.method.nae.aggregate_results(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+        elif args.step == 'validate':
+            src.method.nae.validate(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
