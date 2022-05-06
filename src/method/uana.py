@@ -392,4 +392,4 @@ def validate(
         "re_simulation_error": re_simulation_error,
         "surrogate_error": surrogate_error
     }
-    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.mat'))
+    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.json'))
