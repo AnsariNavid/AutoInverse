@@ -15,7 +15,8 @@ def train_forward_model(
         ) -> None:
 
     forward_model = model.na.create_forward_model(
-        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] + [config['output_size']],
+        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
+                    [config['output_size']],
         activation_function=nn.ReLU()
     )
 
@@ -84,7 +85,8 @@ def inverse_design(
 
     forward_models = []
     forward_model = model.na.create_forward_model(
-        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] + [config['output_size']],
+        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
+                    [config['output_size']],
         activation_function=nn.ReLU()
     )
     forward_model_root_path = utils.get_na_forward_model_directory(
