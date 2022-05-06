@@ -135,3 +135,50 @@ def get_uana_inversion_directory(
         str(experiment_repetition_id),
         str(inversion_repetition_id)
     )
+
+
+def get_na_forward_model_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str
+        ) -> str:
+
+    return os.path.join(results_base_path, experiment_name, config_name, "na", "forward_model")
+
+
+def get_na_inversion_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            experiment_repetition_id: int,
+            inversion_repetition_id: int
+        ) -> str:
+
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "na",
+        "inversion",
+        str(experiment_repetition_id),
+        str(inversion_repetition_id)
+    )
+
+
+def get_nae_inversion_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            experiment_repetition_id: int,
+            inversion_repetition_id: int
+        ) -> str:
+
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "nae",
+        "inversion",
+        str(experiment_repetition_id),
+        str(inversion_repetition_id)
+    )

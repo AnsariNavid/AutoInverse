@@ -30,16 +30,17 @@ def _determine_final_position(
 
 
 def get_re_simulation_error(
-            designs: numpy.ndarray
-        ) -> float:
-
-    current_positions, _ = _determine_final_position(origin_position=designs[:, 0], arm_angles=designs[:, 1:])
-    return (numpy.square(designs - current_positions)).mean()
-
-
-def get_surrogate_error(
             designs: numpy.ndarray,
             targets: numpy.ndarray
         ) -> float:
 
-    return (numpy.square(designs - targets)).mean()
+    current_positions, _ = _determine_final_position(origin_position=designs[:, 0], arm_angles=designs[:, 1:])
+    return (numpy.square(targets - current_positions)).mean()
+
+
+def get_surrogate_error(
+            performances: numpy.ndarray,
+            targets: numpy.ndarray
+        ) -> float:
+
+    return (numpy.square(targets - performances)).mean()
