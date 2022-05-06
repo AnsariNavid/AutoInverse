@@ -9,8 +9,8 @@ from .. import settings
 
 
 def _converge_design_one_iteration(
-            sigma_models: List[Module],
             mu_models: List[Module],
+            sigma_models: List[Module],
             epistemic_weight: float,
             aleatory_weight: float,
             criterion: Callable[[Tensor, Tensor, float, Tensor, float, Tensor], Tuple[Tensor, Tensor]],
@@ -63,8 +63,8 @@ def _converge_design_one_iteration(
 
 
 def converge_design(
-            sigma_models: List[Module],
             mu_models: List[Module],
+            sigma_models: List[Module],
             epistemic_weight: float,
             aleatory_weight: float,
             criterion: Callable[[Tensor, Tensor, float, Tensor, float, Tensor], Tuple[Tensor, Tensor]],
@@ -87,8 +87,8 @@ def converge_design(
     best_no_reduction_loss = None
     for iteration_number in range(1, number_of_iterations + 1, 1):
         loss, mu_mean, sigma_epistemic, sigma_aleatory = _converge_design_one_iteration(
-            sigma_models=sigma_models,
             mu_models=mu_models,
+            sigma_models=sigma_models,
             epistemic_weight=epistemic_weight,
             aleatory_weight=aleatory_weight,
             criterion=criterion,

@@ -222,8 +222,8 @@ def inverse_design(
 
     start_time = time.time()
     loss_value, design, mu_mean, sigma_epistemic, sigma_aleatory, no_reduction_loss = inversion.uana.converge_design(
-        sigma_models=sigma_models,
         mu_models=mu_models,
+        sigma_models=sigma_models,
         epistemic_weight=config['uana']['inversion']['epistemic_weight'],
         aleatory_weight=config['uana']['inversion']['aleatory_weight'],
         criterion=getattr(loss.uana, config['uana']['inversion']['criterion']),
