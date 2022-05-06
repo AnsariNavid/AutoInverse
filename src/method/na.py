@@ -202,19 +202,19 @@ def aggregate_results(
         os.makedirs(aggregated_results_base_path)
 
     utils.save_mat_file(
-        data=numpy.array(best_repetition_id_per_element),
+        data={'data': numpy.array(best_repetition_id_per_element)},
         path=os.path.join(aggregated_results_base_path, 'repetition_id_per_element.mat'),
     )
     utils.save_mat_file(
-        data=numpy.array(best_design),
+        data={'data': numpy.array(best_design)},
         path=os.path.join(aggregated_results_base_path, 'design.mat'),
     )
     utils.save_mat_file(
-        data=numpy.array(best_no_reduction_loss),
+        data={'data': numpy.array(best_no_reduction_loss)},
         path=os.path.join(aggregated_results_base_path, 'no_reduction_loss.mat'),
     )
     utils.save_mat_file(
-        data=numpy.array(best_performance),
+        data={'data': numpy.array(best_performance)},
         path=os.path.join(aggregated_results_base_path, 'performance.mat'),
     )
 
