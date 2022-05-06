@@ -1,13 +1,13 @@
 import os
 import time
-import numpy
 
+import numpy
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
-from .. import inversion, loss, model, settings, train, utils, oracle
+from .. import inversion, loss, model, oracle, settings, train, utils
 
 
 def train_mu_model(
