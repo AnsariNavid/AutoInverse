@@ -3,9 +3,9 @@
     "experiment_name": "multi_joint_robot",
     "config_name": "table1",
 
-    "input_data_path": "/HPS/uana/work/data/multi_joint_robot/multi_joint_input.mat",
-    "output_data_path": "/HPS/uana/work/data/multi_joint_robot/multi_joint_output.mat",
-    "target_data_path": "/HPS/uana/work/data/multi_joint_robot/target_performance.mat",
+    "input_data_path": "/HPS/uana/work/data/multi_joint_robot/input.mat",
+    "output_data_path": "/HPS/uana/work/data/multi_joint_robot/output.mat",
+    "target_data_path": "/HPS/uana/work/data/multi_joint_robot/target.mat",
 
     "input_size": 4,
     "output_size": 2,
