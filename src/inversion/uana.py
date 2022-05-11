@@ -78,6 +78,7 @@ def converge_design(
         ) -> Tuple[float, Tensor, Tensor, Tensor, Tensor, Tensor]:
 
     print("Converging Design ...")
+
     losses = []
     best_loss = float('inf')
     best_design = None
@@ -85,6 +86,7 @@ def converge_design(
     best_sigma_epistemic = None
     best_sigma_aleatory = None
     best_no_reduction_loss = None
+
     for iteration_number in range(1, number_of_iterations + 1, 1):
         loss, mu_mean, sigma_epistemic, sigma_aleatory = _converge_design_one_iteration(
             mu_models=mu_models,
@@ -98,6 +100,7 @@ def converge_design(
             iteration_number=iteration_number,
             number_of_iterations=number_of_iterations
         )
+
         if loss.item() <= best_loss:
             best_loss = loss.item()
             best_design = design.detach().clone()
@@ -122,4 +125,5 @@ def converge_design(
         losses.append(loss.item())
 
     print("Design Converged.")
+
     return best_loss, best_design, best_mu_mean, best_sigma_epistemic, best_sigma_aleatory, best_no_reduction_loss
