@@ -21,6 +21,7 @@ def _train_backward_model_one_epoch(
 
     backward_model.train()
     forward_model.eval()
+
     for batch_number, (data, ) in enumerate(train_data_loader, 1):
         data = data.to(settings.DEVICE)
 
@@ -52,9 +53,11 @@ def train_backward_model(
         ) -> None:
 
     print("Training Backward Model ...")
+
     backward_model.train()
     forward_model.eval()
     last_loss = 0.0
+
     for epoch_number in range(1, number_of_epochs + 1, 1):
         _train_backward_model_one_epoch(
             backward_model=backward_model,
@@ -66,7 +69,9 @@ def train_backward_model(
             number_of_epochs=number_of_epochs
         )
         print()
+
         learning_rate_scheduler.step()
+
         last_loss = test.tandem.test_backward_model(
             backward_model=backward_model,
             forward_model=forward_model,
@@ -74,5 +79,7 @@ def train_backward_model(
             test_data_loader=test_data_loader
         )
         print()
+
     print("Backward Model Trained.")
+
     return last_loss

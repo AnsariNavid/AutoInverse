@@ -19,6 +19,7 @@ def _train_forward_model_one_epoch(
         ) -> None:
 
     forward_model.train()
+
     for batch_number, (data, ground_truth) in enumerate(train_data_loader, 1):
         data = data.to(settings.DEVICE)
         ground_truth = ground_truth.to(settings.DEVICE)
@@ -49,8 +50,10 @@ def train_forward_model(
         ) -> float:
 
     print("Training Forward Model ...")
+
     forward_model.train()
     last_loss = 0.0
+
     for epoch_number in range(1, number_of_epochs + 1, 1):
         _train_forward_model_one_epoch(
             forward_model=forward_model,
@@ -61,12 +64,16 @@ def train_forward_model(
             number_of_epochs=number_of_epochs
         )
         print()
+
         learning_rate_scheduler.step()
+
         last_loss = test.na.test_forward_model(
             forward_model=forward_model,
             criterion=criterion,
             test_data_loader=test_data_loader
         )
         print()
+
     print("Forward Model Trained.")
+
     return last_loss

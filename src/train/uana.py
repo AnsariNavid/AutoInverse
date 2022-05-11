@@ -20,6 +20,7 @@ def _train_mu_model_one_epoch(
         ) -> None:
 
     mu_model.train()
+
     for batch_number, (data, ground_truth) in enumerate(train_data_loader, 1):
         data = data.to(settings.DEVICE)
         ground_truth = ground_truth.to(settings.DEVICE)
@@ -50,8 +51,10 @@ def train_mu_model(
         ) -> float:
 
     print("Training Mu Model ...")
+
     mu_model.train()
     last_loss = 0.0
+
     for epoch_number in range(1, number_of_epochs + 1, 1):
         _train_mu_model_one_epoch(
             mu_model=mu_model,
@@ -62,14 +65,18 @@ def train_mu_model(
             number_of_epochs=number_of_epochs
         )
         print()
+
         learning_rate_scheduler.step()
+
         last_loss = test.uana.test_mu_model(
             mu_model=mu_model,
             criterion=criterion,
             test_data_loader=test_data_loader
         )
         print()
+
     print("Mu Model Trained.")
+
     return last_loss
 
 
@@ -86,6 +93,7 @@ def _train_sigma_model_one_epoch(
 
     sigma_model.train()
     mu_model.train()
+
     for batch_number, (data, ground_truth) in enumerate(train_data_loader, 1):
         data = data.to(settings.DEVICE)
         ground_truth = ground_truth.to(settings.DEVICE)
@@ -125,9 +133,11 @@ def train_sigma_model(
         ) -> float:
 
     print("Training Sigma Model ...")
+
     sigma_model.train()
     mu_model.train()
     last_loss = 0.0
+
     for epoch_number in range(1, number_of_epochs + 1, 1):
         _train_sigma_model_one_epoch(
             sigma_model=sigma_model,
@@ -140,8 +150,10 @@ def train_sigma_model(
             number_of_epochs=number_of_epochs
         )
         print()
+
         sigma_learning_rate_scheduler.step()
         mu_learning_rate_scheduler.step()
+
         last_loss = test.uana.test_sigma_model(
             sigma_model=sigma_model,
             mu_model=mu_model,
@@ -149,11 +161,14 @@ def train_sigma_model(
             test_data_loader=test_data_loader
         )
         print()
+
         test.uana.test_mu_model(
             mu_model=mu_model,
             criterion=mu_criterion,
             test_data_loader=test_data_loader
         )
         print()
+
     print("Sigma Model Trained.")
+
     return last_loss
