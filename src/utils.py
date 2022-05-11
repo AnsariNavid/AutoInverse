@@ -216,3 +216,43 @@ def get_tandem_inversion_directory(
         "inversion",
         str(experiment_repetition_id)
     )
+
+
+def get_ua_tandem_backward_model_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            epistemic_weight: float,
+            aleatory_weight: float,
+            experiment_repetition_id: int
+        ) -> str:
+
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "ua_tandem",
+        "backward_model",
+        f"{str(epistemic_weight)}_{str(aleatory_weight)}",
+        str(experiment_repetition_id)
+    )
+
+
+def get_ua_tandem_inversion_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            epistemic_weight: float,
+            aleatory_weight: float,
+            experiment_repetition_id: int
+        ) -> str:
+
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "ua_tandem",
+        "inversion",
+        f"{str(epistemic_weight)}_{str(aleatory_weight)}",
+        str(experiment_repetition_id)
+    )
