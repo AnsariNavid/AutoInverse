@@ -17,7 +17,7 @@ def inverse_design(
 
     forward_models = []
     for model_id in range(len(config['uana']['mu_model']['activation_functions'])):
-        forward_model = model.na.create_forward_model(
+        forward_model = model.uana.create_mu_model(
             layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] +
             [config['output_size']],
             activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
@@ -172,11 +172,11 @@ def validate(
     targets = utils.load_mat_file(path=config['target_data_path'])['data']
 
     re_simulation_error = getattr(
-        getattr(oracle, config['experiment_name']),
+        getattr(oracle, config['oracle']),
         'get_re_simulation_error'
     )(designs=designs, targets=targets)
     surrogate_error = getattr(
-        getattr(oracle, config['experiment_name']),
+        getattr(oracle, config['oracle']),
         'get_surrogate_error'
     )(performances=performances, targets=targets)
 

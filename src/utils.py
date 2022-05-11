@@ -182,3 +182,37 @@ def get_nae_inversion_directory(
         str(experiment_repetition_id),
         str(inversion_repetition_id)
     )
+
+
+def get_tandem_backward_model_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            experiment_repetition_id: int
+        ) -> str:
+
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "tandem",
+        "backward_model",
+        str(experiment_repetition_id)
+    )
+
+
+def get_tandem_inversion_directory(
+            results_base_path: str,
+            experiment_name: str,
+            config_name: str,
+            experiment_repetition_id: int
+        ) -> str:
+
+    return os.path.join(
+        results_base_path,
+        experiment_name,
+        config_name,
+        "tandem",
+        "inversion",
+        str(experiment_repetition_id)
+    )

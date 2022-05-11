@@ -50,7 +50,7 @@ def train_backward_model(
             train_data_loader: DataLoader,
             test_data_loader: DataLoader,
             number_of_epochs: int
-        ) -> None:
+        ) -> float:
 
     print("Training Backward Model ...")
 

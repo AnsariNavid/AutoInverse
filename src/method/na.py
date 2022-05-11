@@ -16,8 +16,7 @@ def train_forward_model(
 
     forward_model = model.na.create_forward_model(
         layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
-                    [config['output_size']],
-        activation_function=nn.ReLU()
+                    [config['output_size']]
     )
 
     train_tensor_dataset, test_tensor_dataset = utils.get_train_test_tensor_datasets(
@@ -86,8 +85,7 @@ def inverse_design(
     forward_models = []
     forward_model = model.na.create_forward_model(
         layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
-                    [config['output_size']],
-        activation_function=nn.ReLU()
+                    [config['output_size']]
     )
     forward_model_root_path = utils.get_na_forward_model_directory(
         results_base_path=config['results_base_path'],
@@ -238,11 +236,11 @@ def validate(
     targets = utils.load_mat_file(path=config['target_data_path'])['data']
 
     re_simulation_error = getattr(
-        getattr(oracle, config['experiment_name']),
+        getattr(oracle, config['oracle']),
         'get_re_simulation_error'
     )(designs=designs, targets=targets)
     surrogate_error = getattr(
-        getattr(oracle, config['experiment_name']),
+        getattr(oracle, config['oracle']),
         'get_surrogate_error'
     )(performances=performances, targets=targets)
 

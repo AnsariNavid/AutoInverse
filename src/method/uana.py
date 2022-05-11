@@ -381,11 +381,11 @@ def validate(
     targets = utils.load_mat_file(path=config['target_data_path'])['data']
 
     re_simulation_error = getattr(
-        getattr(oracle, config['experiment_name']),
+        getattr(oracle, config['oracle']),
         'get_re_simulation_error'
     )(designs=designs, targets=targets)
     surrogate_error = getattr(
-        getattr(oracle, config['experiment_name']),
+        getattr(oracle, config['oracle']),
         'get_surrogate_error'
     )(performances=performances, targets=targets)
 
