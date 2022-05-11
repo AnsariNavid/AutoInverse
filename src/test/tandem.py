@@ -22,7 +22,7 @@ def test_backward_model(
     total_loss = 0.0
 
     with torch.no_grad():
-        for data in test_data_loader:
+        for (data, ) in test_data_loader:
             data = data.to(settings.DEVICE)
 
             backward_model_output = backward_model(data)

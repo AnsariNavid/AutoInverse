@@ -10,7 +10,7 @@ def pars_arguments() -> Any:
 
     parser.add_argument('-c', '--config', type=str, required=True)
     parser.add_argument('-m', '--method', type=str, required=True,
-                        choices=['uana', 'na', 'nae'])
+                        choices=['uana', 'na', 'nae', 'tandem'])
     parser.add_argument('-s', '--step', type=str, required=True)
 
     parser.add_argument('-n', '--model_id', type=int, required=False)

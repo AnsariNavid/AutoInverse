@@ -88,7 +88,7 @@ def train_backward_model(
     utils.create_directory(directory=root_path)
 
     utils.save_json_file(data=data, path=os.path.join(root_path, 'info.json'))
-    utils.save_model(model=forward_model, path=os.path.join(root_path, 'model.pt'))
+    utils.save_model(model=backward_model, path=os.path.join(root_path, 'model.pt'))
 
 
 def inverse_design(
