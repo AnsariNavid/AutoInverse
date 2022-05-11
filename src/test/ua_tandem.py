@@ -19,12 +19,14 @@ def test_backward_model(
         ) -> float:
 
     print("Testing Backward Model ...")
+
     backward_model.eval()
     number_of_models = len(mu_models)
     for i in range(number_of_models):
         mu_models[i].eval()
         sigma_models[i].eval()
     total_loss = 0.0
+
     with torch.no_grad():
         for data in test_data_loader:
             data = data.to(settings.DEVICE)
@@ -58,6 +60,7 @@ def test_backward_model(
             total_loss += loss.item()
 
         print(f'Loss: {total_loss / len(test_data_loader):.{settings.NUMBER_OF_DECIMAL_PLACES}f}')
-    backward_model.train()
+
     print("Backward Model Tested.")
+
     return total_loss / len(test_data_loader)

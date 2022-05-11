@@ -15,8 +15,10 @@ def test_mu_model(
         ) -> float:
 
     print("Testing Mu Model ...")
+
     mu_model.eval()
     total_loss = 0.0
+
     with torch.no_grad():
         for data, ground_truth in test_data_loader:
             data = data.to(settings.DEVICE)
@@ -29,8 +31,9 @@ def test_mu_model(
             total_loss += loss.item()
 
         print(f'Loss: {total_loss / len(test_data_loader):.{settings.NUMBER_OF_DECIMAL_PLACES}f}')
-    mu_model.train()
+
     print("Mu Model Tested.")
+
     return total_loss / len(test_data_loader)
 
 
@@ -42,9 +45,11 @@ def test_sigma_model(
         ) -> float:
 
     print("Testing Sigma Model ...")
+
     sigma_model.eval()
     mu_model.eval()
     total_loss = 0.0
+
     with torch.no_grad():
         for data, ground_truth in test_data_loader:
             data = data.to(settings.DEVICE)
@@ -60,7 +65,7 @@ def test_sigma_model(
             total_loss += loss.item()
 
         print(f'Loss: {total_loss / len(test_data_loader):.{settings.NUMBER_OF_DECIMAL_PLACES}f}')
-    sigma_model.train()
-    mu_model.train()
+
     print("Sigma Model Tested.")
+
     return total_loss / len(test_data_loader)

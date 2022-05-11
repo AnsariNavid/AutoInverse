@@ -15,8 +15,10 @@ def test_forward_model(
         ) -> float:
 
     print("Testing Forward Model ...")
+
     forward_model.eval()
     total_loss = 0.0
+
     with torch.no_grad():
         for data, ground_truth in test_data_loader:
             data = data.to(settings.DEVICE)
@@ -29,6 +31,7 @@ def test_forward_model(
             total_loss += loss.item()
 
         print(f'Loss: {total_loss / len(test_data_loader):.{settings.NUMBER_OF_DECIMAL_PLACES}f}')
-    forward_model.train()
+
     print("Forward Model Tested.")
+
     return total_loss / len(test_data_loader)
