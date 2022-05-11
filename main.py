@@ -94,6 +94,22 @@ def pars_arguments() -> Any:
         else:
             parser.error("invalid --step.")
 
+    if args.method == 'ua_tandem':
+        if args.step == 'train_backward_model':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        elif args.step == 'inverse_design':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        elif args.step == 'validate':
+            if args.experiment_repetition_id is None:
+                parser.error("--experiment_repetition_id is required.")
+
+        else:
+            parser.error("invalid --step.")
+
     return args
 
 
@@ -197,6 +213,25 @@ if __name__ == '__main__':
 
         elif args.step == 'validate':
             src.method.tandem.validate(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+    if args.method == 'ua_tandem':
+        if args.step == 'train_backward_model':
+            src.method.ua_tandem.train_backward_model(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+        elif args.step == 'inverse_design':
+            src.method.ua_tandem.inverse_design(
+                config=config,
+                experiment_repetition_id=args.experiment_repetition_id
+            )
+
+        elif args.step == 'validate':
+            src.method.ua_tandem.validate(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )

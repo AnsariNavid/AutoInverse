@@ -128,7 +128,7 @@ def inverse_design(
     backward_model.eval()
 
     target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
-    
+
     design, performance = inversion.tandem.invert_performance(
         backward_model=backward_model,
         forward_model=forward_model,
