@@ -2,6 +2,7 @@
     "results_base_path": "/HPS/uana/work/results",
     "experiment_name": "airfoil",
     "config_name": "config2",
+    "oracle": "airfoil",
 
     "input_data_path": "/HPS/uana/work/data/airfoil/input.mat",
     "output_data_path": "/HPS/uana/work/data/airfoil/output.mat",
