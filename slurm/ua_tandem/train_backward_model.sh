@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J ua_tandem_train_backward_model
 #SBATCH -p gpu20
-#SBATCH -t 15:00
+#SBATCH -t 30:00
 #SBATCH --gres gpu:1
 #SBATCH --array=0-0
 #SBATCH -o /HPS/uana/work/slurm_log/%x-%j-%a.log
