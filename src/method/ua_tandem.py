@@ -181,7 +181,7 @@ def inverse_design(
 
     target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
 
-    design, performance, sigma_epistemic, sigma_aleatory = inversion.ua_tandem.invert_performance(
+    design, mu_mean, sigma_epistemic, sigma_aleatory = inversion.ua_tandem.invert_performance(
         backward_model=backward_model,
         mu_models=mu_models,
         sigma_models=sigma_models,
@@ -199,7 +199,7 @@ def inverse_design(
     utils.create_directory(directory=root_path)
 
     utils.save_tensor_to_mat_file(tensor=design, path=os.path.join(root_path, 'design.mat'))
-    utils.save_tensor_to_mat_file(tensor=performance, path=os.path.join(root_path, 'performance.mat'))
+    utils.save_tensor_to_mat_file(tensor=mu_mean, path=os.path.join(root_path, 'performance.mat'))
     utils.save_tensor_to_mat_file(tensor=sigma_epistemic, path=os.path.join(root_path, 'sigma_epistemic.mat'))
     utils.save_tensor_to_mat_file(tensor=sigma_aleatory, path=os.path.join(root_path, 'sigma_aleatory.mat'))
 
