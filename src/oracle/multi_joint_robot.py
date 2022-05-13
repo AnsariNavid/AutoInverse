@@ -1,6 +1,9 @@
+import os
 from typing import Tuple
 
 import numpy
+
+from .. import utils
 
 
 def _determine_final_position(
@@ -29,7 +32,7 @@ def _determine_final_position(
     return current_position, numpy.array(positions)
 
 
-def get_re_simulation_error(
+def _get_re_simulation_error(
             designs: numpy.ndarray,
             targets: numpy.ndarray
         ) -> float:
@@ -38,9 +41,28 @@ def get_re_simulation_error(
     return (numpy.square(targets - current_positions)).mean()
 
 
-def get_surrogate_error(
+def _get_surrogate_error(
             performances: numpy.ndarray,
             targets: numpy.ndarray
         ) -> float:
 
     return (numpy.square(targets - performances)).mean()
+
+
+def validate(
+            config: dict,
+            root_path: str
+        ) -> None:
+
+    designs = utils.load_mat_file(path=os.path.join(root_path, 'design.mat'))['data']
+    performances = utils.load_mat_file(path=os.path.join(root_path, 'performance.mat'))['data']
+    targets = utils.load_mat_file(path=config['target_data_path'])['data']
+
+    re_simulation_error = _get_re_simulation_error(designs=designs, targets=targets)
+    surrogate_error = _get_surrogate_error(performances=performances, targets=targets)
+
+    data = {
+        "re_simulation_error": re_simulation_error,
+        "surrogate_error": surrogate_error
+    }
+    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.json'))
