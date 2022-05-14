@@ -1,9 +1,10 @@
 import os
+from collections import OrderedDict
 
 import numpy
-from torch import Tensor
 import torch
 import torch.nn as nn
+from torch import Tensor
 
 from .. import utils
 
@@ -15,23 +16,32 @@ def _get_oracle_performances(
     forward_models = []
     for model_id in range(20):
         forward_model = nn.Sequential(
-            nn.Linear(in_features=8, out_features=100, bias=False),
+            nn.Linear(in_features=8, out_features=100, bias=True),
             nn.ReLU(),
-            nn.Linear(in_features=100, out_features=250, bias=False),
+            nn.Linear(in_features=100, out_features=250, bias=True),
             nn.ReLU(),
-            nn.Linear(in_features=250, out_features=250, bias=False),
+            nn.Linear(in_features=250, out_features=250, bias=True),
             nn.ReLU(),
-            nn.Linear(in_features=250, out_features=100, bias=False),
+            nn.Linear(in_features=250, out_features=100, bias=True),
             nn.ReLU(),
-            nn.Linear(in_features=100, out_features=31, bias=False),
+            nn.Linear(in_features=100, out_features=31, bias=True),
         )
-        forward_model.load_state_dict(
-            torch.load(
-                os.path.join('spectral_printing_oracle_models', f'model_{model_id}.ckpt'),
-                map_location=torch.device('cpu')
-            ),
-            strict=False
+        custom_state_dict = torch.load(
+            os.path.join('spectral_printing_oracle_models', f'model_{model_id}.ckpt'),
+            map_location=torch.device('cpu')
         )
+        default_state_dict = OrderedDict()
+        default_state_dict['0.weight'] = custom_state_dict['layers.0.weight']
+        default_state_dict['0.bias'] = custom_state_dict['layers.0.bias']
+        default_state_dict['2.weight'] = custom_state_dict['layers.1.weight']
+        default_state_dict['2.bias'] = custom_state_dict['layers.1.bias']
+        default_state_dict['4.weight'] = custom_state_dict['layers.2.weight']
+        default_state_dict['4.bias'] = custom_state_dict['layers.2.bias']
+        default_state_dict['6.weight'] = custom_state_dict['layers.3.weight']
+        default_state_dict['6.bias'] = custom_state_dict['layers.3.bias']
+        default_state_dict['8.weight'] = custom_state_dict['layers.4.weight']
+        default_state_dict['8.bias'] = custom_state_dict['layers.4.bias']
+        forward_model.load_state_dict(default_state_dict)
         forward_model.eval()
         forward_models.append(forward_model)
 
