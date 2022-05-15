@@ -1,17 +1,17 @@
 #!/bin/bash
-#SBATCH -J na_inverse_design
+#SBATCH -J nae_invert_target
 #SBATCH -p gpu20
 #SBATCH -t 15:00
 #SBATCH --gres gpu:1
-#SBATCH --array=0-49
+#SBATCH --array=0-249
 #SBATCH -o /HPS/uana/work/slurm_log/%x-%j-%a.log
 #SBATCH -e /HPS/uana/work/slurm_log/%x-%j-%a.err
 
 configFile=""
 experiment_repetition_id=0
-method="na"
-step="inverse_design"
-numberOfInversionRepetition=50
+method="nae"
+step="invert_target"
+numberOfInversionRepetition=250
 currentJob=0
 for (( inversion_repetition_id = 0; inversion_repetition_id < $numberOfInversionRepetition; inversion_repetition_id++ ))
 do

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J uana_inverse_design
+#SBATCH -J uana_invert_target
 #SBATCH -p gpu20
 #SBATCH -t 15:00
 #SBATCH --gres gpu:1
@@ -10,7 +10,7 @@
 configFile=""
 experiment_repetition_id=0
 method="uana"
-step="inverse_design"
+step="invert_target"
 numberOfInversionRepetition=50
 currentJob=0
 for (( inversion_repetition_id = 0; inversion_repetition_id < $numberOfInversionRepetition; inversion_repetition_id++ ))

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J ua_tandem_inverse_design
+#SBATCH -J ua_tandem_invert_target
 #SBATCH -p gpu20
 #SBATCH -t 15:00
 #SBATCH --gres gpu:1
@@ -10,6 +10,6 @@
 configFile=""
 experiment_repetition_id=0
 method="ua_tandem"
-step="inverse_design"
+step="invert_target"
 
 python main.py --config $configFile --method $method --step $step --experiment_repetition_id $experiment_repetition_id
