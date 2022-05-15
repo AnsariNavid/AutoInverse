@@ -4,7 +4,7 @@ from torch import Tensor
 from torch.nn import Module
 
 
-def invert_performance(
+def invert_target(
             backward_model: Module,
             forward_model: Module,
             target: Tensor

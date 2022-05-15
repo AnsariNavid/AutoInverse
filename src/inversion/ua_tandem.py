@@ -7,7 +7,7 @@ from torch.nn import Module
 from .. import settings
 
 
-def invert_performance(
+def invert_target(
             backward_model: Module,
             mu_models: List[Module],
             sigma_models: List[Module],
