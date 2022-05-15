@@ -16,6 +16,8 @@ def pars_arguments() -> Any:
     parser.add_argument('-n', '--model_id', type=int, required=False)
     parser.add_argument('-e', '--experiment_repetition_id', type=int, required=False)
     parser.add_argument('-i', '--inversion_repetition_id', type=int, required=False)
+    parser.add_argument('-t', '--target_name', type=str, required=False,
+                        choices=['tuning_target', 'evaluation_target', 'total_target'])
 
     args = parser.parse_args()
 
@@ -29,7 +31,7 @@ def pars_arguments() -> Any:
                 parser.error("--model_id is required.")
 
         elif args.step == 'invert_target':
-            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
         elif args.step == 'aggregate_results':
@@ -37,7 +39,7 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'evaluate_results':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         else:
@@ -48,7 +50,7 @@ def pars_arguments() -> Any:
             pass
 
         elif args.step == 'invert_target':
-            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
         elif args.step == 'aggregate_results':
@@ -56,7 +58,7 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'evaluate_results':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         else:
@@ -64,7 +66,7 @@ def pars_arguments() -> Any:
 
     if args.method == 'nae':
         if args.step == 'invert_target':
-            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
         elif args.step == 'aggregate_results':
@@ -72,7 +74,7 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'evaluate_results':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         else:
@@ -84,11 +86,11 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'invert_target':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'evaluate_results':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         else:
@@ -100,11 +102,11 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'invert_target':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         elif args.step == 'evaluate_results':
-            if args.experiment_repetition_id is None:
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
                 parser.error("--experiment_repetition_id is required.")
 
         else:
@@ -138,7 +140,8 @@ if __name__ == '__main__':
             src.method.uana.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id,
-                inversion_repetition_id=args.inversion_repetition_id
+                inversion_repetition_id=args.inversion_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'aggregate_results':
@@ -150,7 +153,8 @@ if __name__ == '__main__':
         elif args.step == 'evaluate_results':
             src.method.uana.evaluate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
     if args.method == 'na':
@@ -163,7 +167,8 @@ if __name__ == '__main__':
             src.method.na.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id,
-                inversion_repetition_id=args.inversion_repetition_id
+                inversion_repetition_id=args.inversion_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'aggregate_results':
@@ -175,7 +180,8 @@ if __name__ == '__main__':
         elif args.step == 'evaluate_results':
             src.method.na.evaluate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
     if args.method == 'nae':
@@ -183,7 +189,8 @@ if __name__ == '__main__':
             src.method.nae.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id,
-                inversion_repetition_id=args.inversion_repetition_id
+                inversion_repetition_id=args.inversion_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'aggregate_results':
@@ -195,7 +202,8 @@ if __name__ == '__main__':
         elif args.step == 'evaluate_results':
             src.method.nae.evaluate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
     if args.method == 'tandem':
@@ -208,13 +216,15 @@ if __name__ == '__main__':
         elif args.step == 'invert_target':
             src.method.tandem.invert_target(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'evaluate_results':
             src.method.tandem.evaluate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
     if args.method == 'ua_tandem':
@@ -227,11 +237,13 @@ if __name__ == '__main__':
         elif args.step == 'invert_target':
             src.method.ua_tandem.invert_target(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'evaluate_results':
             src.method.ua_tandem.evaluate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
