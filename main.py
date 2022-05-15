@@ -28,7 +28,7 @@ def pars_arguments() -> Any:
             if args.model_id is None:
                 parser.error("--model_id is required.")
 
-        elif args.step == 'inverse_design':
+        elif args.step == 'invert_target':
             if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
@@ -36,7 +36,7 @@ def pars_arguments() -> Any:
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'validate':
+        elif args.step == 'evaluate_results':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
@@ -47,7 +47,7 @@ def pars_arguments() -> Any:
         if args.step == 'train_forward_model':
             pass
 
-        elif args.step == 'inverse_design':
+        elif args.step == 'invert_target':
             if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
@@ -55,7 +55,7 @@ def pars_arguments() -> Any:
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'validate':
+        elif args.step == 'evaluate_results':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
@@ -63,7 +63,7 @@ def pars_arguments() -> Any:
             parser.error("invalid --step.")
 
     if args.method == 'nae':
-        if args.step == 'inverse_design':
+        if args.step == 'invert_target':
             if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None):
                 parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
 
@@ -71,7 +71,7 @@ def pars_arguments() -> Any:
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'validate':
+        elif args.step == 'evaluate_results':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
@@ -83,11 +83,11 @@ def pars_arguments() -> Any:
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'inverse_design':
+        elif args.step == 'invert_target':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'validate':
+        elif args.step == 'evaluate_results':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
@@ -99,11 +99,11 @@ def pars_arguments() -> Any:
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'inverse_design':
+        elif args.step == 'invert_target':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
-        elif args.step == 'validate':
+        elif args.step == 'evaluate_results':
             if args.experiment_repetition_id is None:
                 parser.error("--experiment_repetition_id is required.")
 
@@ -134,8 +134,8 @@ if __name__ == '__main__':
                 model_id=args.model_id
             )
 
-        elif args.step == 'inverse_design':
-            src.method.uana.inverse_design(
+        elif args.step == 'invert_target':
+            src.method.uana.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id,
                 inversion_repetition_id=args.inversion_repetition_id
@@ -147,8 +147,8 @@ if __name__ == '__main__':
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'validate':
-            src.method.uana.validate(
+        elif args.step == 'evaluate_results':
+            src.method.uana.evaluate_results(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
@@ -159,8 +159,8 @@ if __name__ == '__main__':
                 config=config
             )
 
-        elif args.step == 'inverse_design':
-            src.method.na.inverse_design(
+        elif args.step == 'invert_target':
+            src.method.na.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id,
                 inversion_repetition_id=args.inversion_repetition_id
@@ -172,15 +172,15 @@ if __name__ == '__main__':
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'validate':
-            src.method.na.validate(
+        elif args.step == 'evaluate_results':
+            src.method.na.evaluate_results(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
     if args.method == 'nae':
-        if args.step == 'inverse_design':
-            src.method.nae.inverse_design(
+        if args.step == 'invert_target':
+            src.method.nae.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id,
                 inversion_repetition_id=args.inversion_repetition_id
@@ -192,8 +192,8 @@ if __name__ == '__main__':
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'validate':
-            src.method.nae.validate(
+        elif args.step == 'evaluate_results':
+            src.method.nae.evaluate_results(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
@@ -205,14 +205,14 @@ if __name__ == '__main__':
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'inverse_design':
-            src.method.tandem.inverse_design(
+        elif args.step == 'invert_target':
+            src.method.tandem.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'validate':
-            src.method.tandem.validate(
+        elif args.step == 'evaluate_results':
+            src.method.tandem.evaluate_results(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
@@ -224,14 +224,14 @@ if __name__ == '__main__':
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'inverse_design':
-            src.method.ua_tandem.inverse_design(
+        elif args.step == 'invert_target':
+            src.method.ua_tandem.invert_target(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
 
-        elif args.step == 'validate':
-            src.method.ua_tandem.validate(
+        elif args.step == 'evaluate_results':
+            src.method.ua_tandem.evaluate_results(
                 config=config,
                 experiment_repetition_id=args.experiment_repetition_id
             )
