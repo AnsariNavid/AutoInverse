@@ -94,8 +94,8 @@ def evaluate_results(
         "mse": mse
     }
 
-    utils.save_json_file(data=data, path=os.path.join(root_path, f'{target_name}_validation_results.json'))
+    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.json'))
     utils.save_tensor_to_mat_file(
         tensor=oracle_performances,
-        path=os.path.join(root_path, f'{target_name}_oracle_performance.mat')
+        path=os.path.join(root_path, 'oracle_performance.mat')
     )
