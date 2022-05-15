@@ -52,7 +52,7 @@ def _get_surrogate_error(
 def evaluate_results(
             config: dict,
             root_path: str,
-            target_name: bool
+            target_name: str
         ) -> None:
 
     designs = utils.load_mat_file(path=os.path.join(root_path, 'design.mat'))['data']
@@ -66,4 +66,5 @@ def evaluate_results(
         "re_simulation_error": re_simulation_error,
         "surrogate_error": surrogate_error
     }
+
     utils.save_json_file(data=data, path=os.path.join(root_path, f'{target_name}_validation_results.json'))

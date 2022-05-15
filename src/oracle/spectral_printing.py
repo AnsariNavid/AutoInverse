@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-from .. import utils
+from .. import settings, utils
 
 
 def _get_oracle_performances(
@@ -25,24 +25,14 @@ def _get_oracle_performances(
             nn.Linear(in_features=250, out_features=100, bias=True),
             nn.ReLU(),
             nn.Linear(in_features=100, out_features=31, bias=True),
+        ).to(settings.DEVICE)
+
+        forward_model = utils.load_model(
+            model=forward_model,
+            path=os.path.join('src', 'oracle', 'spectral_printing_oracle_models', f'model_{model_id}.pt')
         )
-        custom_state_dict = torch.load(
-            os.path.join('spectral_printing_oracle_models', f'model_{model_id}.ckpt'),
-            map_location=torch.device('cpu')
-        )
-        default_state_dict = OrderedDict()
-        default_state_dict['0.weight'] = custom_state_dict['layers.0.weight']
-        default_state_dict['0.bias'] = custom_state_dict['layers.0.bias']
-        default_state_dict['2.weight'] = custom_state_dict['layers.1.weight']
-        default_state_dict['2.bias'] = custom_state_dict['layers.1.bias']
-        default_state_dict['4.weight'] = custom_state_dict['layers.2.weight']
-        default_state_dict['4.bias'] = custom_state_dict['layers.2.bias']
-        default_state_dict['6.weight'] = custom_state_dict['layers.3.weight']
-        default_state_dict['6.bias'] = custom_state_dict['layers.3.bias']
-        default_state_dict['8.weight'] = custom_state_dict['layers.4.weight']
-        default_state_dict['8.bias'] = custom_state_dict['layers.4.bias']
-        forward_model.load_state_dict(default_state_dict)
         forward_model.eval()
+
         forward_models.append(forward_model)
 
     batch_size = designs.shape[0]
@@ -50,7 +40,6 @@ def _get_oracle_performances(
     oracle_performances = torch.empty(batch_size, 31)
 
     for element_id in range(batch_size):
-
         ensembled_outputs = torch.empty(20, 31)
         for model_id in range(20):
             ensembled_outputs[model_id, :] = forward_models[model_id](designs[element_id])
@@ -86,14 +75,15 @@ def _ink_density(
     }
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            root_path: str
+            root_path: str,
+            target_name: str
         ) -> None:
 
     designs = utils.load_mat_file(path=os.path.join(root_path, 'design.mat'))['data']
     designs = numpy.clip(designs, a_min=0.0, a_max=1.0)
-    targets = utils.load_mat_file(path=config['target_data_path'])['data']
+    targets = utils.load_mat_file(path=config[f'{target_name}_path'])['data']
     oracle_performances = _get_oracle_performances(designs=designs)
 
     ink_density = _ink_density(designs=designs)
@@ -104,5 +94,8 @@ def validate(
         "mse": mse
     }
 
-    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.json'))
-    utils.save_tensor_to_mat_file(tensor=oracle_performances, path=os.path.join(root_path, 'oracle_performance.mat'))
+    utils.save_json_file(data=data, path=os.path.join(root_path, f'{target_name}_validation_results.json'))
+    utils.save_tensor_to_mat_file(
+        tensor=oracle_performances,
+        path=os.path.join(root_path, f'{target_name}_oracle_performance.mat')
+    )
