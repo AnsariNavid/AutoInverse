@@ -8,6 +8,7 @@
 #SBATCH -e /HPS/uana/work/slurm_log/%x-%j-%a.err
 
 configFile=""
+targetName=""
 experiment_repetition_id=0
 method="nae"
 step="invert_target"
@@ -17,7 +18,7 @@ for (( inversion_repetition_id = 0; inversion_repetition_id < $numberOfInversion
 do
     if [[ $currentJob -eq $SLURM_ARRAY_TASK_ID ]]
     then
-        python main.py --config $configFile --method $method --step $step --experiment_repetition_id $experiment_repetition_id --inversion_repetition_id $inversion_repetition_id
+        python main.py --config $configFile --method $method --step $step --experiment_repetition_id $experiment_repetition_id --inversion_repetition_id $inversion_repetition_id --target_name $targetName
     fi
     currentJob=$currentJob+1
 done

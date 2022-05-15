@@ -8,8 +8,9 @@
 #SBATCH -e /HPS/uana/work/slurm_log/%x-%j-%a.err
 
 configFile=""
+targetName=""
 experiment_repetition_id=0
 method="tandem"
 step="invert_target"
 
-python main.py --config $configFile --method $method --step $step --experiment_repetition_id $experiment_repetition_id
+python main.py --config $configFile --method $method --step $step --experiment_repetition_id $experiment_repetition_id --target_name $targetName
