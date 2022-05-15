@@ -8,6 +8,8 @@ from torch import Tensor
 from torch.nn import Module
 from torch.utils.data import TensorDataset, random_split
 
+from . import settings
+
 
 def save_mat_file(
             data: dict,
@@ -37,7 +39,7 @@ def load_model(
             path: str
         ) -> Module:
 
-    model.load_state_dict(torch.load(path))
+    model.load_state_dict(torch.load(path, map_location=settings.DEVICE))
     return model
 
 
