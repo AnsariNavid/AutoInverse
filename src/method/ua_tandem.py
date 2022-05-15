@@ -13,52 +13,17 @@ def train_backward_model(
             experiment_repetition_id: int
         ) -> None:
 
-    mu_models = []
-    sigma_models = []
-    for model_id in range(len(config['uana']['mu_model']['activation_functions'])):
-        mu_model = model.uana.create_mu_model(
-            layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] +
-            [config['output_size']],
-            activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
-        )
-        mu_model_root_path = utils.get_uana_mu_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        mu_model = utils.load_model(
-            model=mu_model,
-            path=os.path.join(mu_model_root_path, f'model_{model_id}_fine_tuned.pt')
-        )
-        mu_model.eval()
-        mu_models.append(mu_model)
+    mu_models = model.uana.load_mu_models(config=config, fine_tuned=True)
+    sigma_models = model.uana.load_sigma_models(config=config)
 
-        sigma_model = model.uana.create_sigma_model(
-            layers_size=[config['input_size']] + config['uana']['sigma_model']['hidden_layers_size'] +
-                        [config['output_size']],
-        )
-        sigma_model_root_path = utils.get_uana_sigma_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        sigma_model = utils.load_model(
-            model=sigma_model,
-            path=os.path.join(sigma_model_root_path, f'model_{model_id}.pt')
-        )
-        sigma_model.eval()
-        sigma_models.append(sigma_model)
-
-    backward_model = model.tandem.create_backward_model(
-        layers_size=[config['output_size']] + config['ua_tandem']['backward_model']['hidden_layers_size'] +
-                    [config['input_size']]
+    backward_model = model.ua_tandem.create_backward_model(
+        layers_size=[config['performance_size']] + config['ua_tandem']['backward_model']['hidden_layers_size'] +
+                    [config['design_size']]
     )
 
     train_tensor_dataset, test_tensor_dataset = utils.get_train_test_tensor_datasets(
         tensor_dataset=TensorDataset(
-            utils.load_tensor_from_mat_file(path=config['output_data_path'])
+            utils.load_tensor_from_mat_file(path=config['performance_path'])
         ),
         train_split_ratio=config['ua_tandem']['backward_model']['train_split_ratio']
     )
@@ -118,70 +83,23 @@ def train_backward_model(
     utils.save_model(model=backward_model, path=os.path.join(root_path, 'model.pt'))
 
 
-def inverse_design(
+def invert_target(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
-    mu_models = []
-    sigma_models = []
-    for model_id in range(len(config['uana']['mu_model']['activation_functions'])):
-        mu_model = model.uana.create_mu_model(
-            layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] +
-            [config['output_size']],
-            activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
-        )
-        mu_model_root_path = utils.get_uana_mu_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        mu_model = utils.load_model(
-            model=mu_model,
-            path=os.path.join(mu_model_root_path, f'model_{model_id}_fine_tuned.pt')
-        )
-        mu_model.eval()
-        mu_models.append(mu_model)
+    mu_models = model.uana.load_mu_models(config=config, fine_tuned=True)
+    sigma_models = model.uana.load_sigma_models(config=config)
 
-        sigma_model = model.uana.create_sigma_model(
-            layers_size=[config['input_size']] + config['uana']['sigma_model']['hidden_layers_size'] +
-                        [config['output_size']],
-        )
-        sigma_model_root_path = utils.get_uana_sigma_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        sigma_model = utils.load_model(
-            model=sigma_model,
-            path=os.path.join(sigma_model_root_path, f'model_{model_id}.pt')
-        )
-        sigma_model.eval()
-        sigma_models.append(sigma_model)
-
-    backward_model = model.tandem.create_backward_model(
-        layers_size=[config['output_size']] + config['ua_tandem']['backward_model']['hidden_layers_size'] +
-                    [config['input_size']]
-    )
-    backward_model_root_path = utils.get_ua_tandem_backward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name'],
-        epistemic_weight=config['ua_tandem']['backward_model']['epistemic_weight'],
-        aleatory_weight=config['ua_tandem']['backward_model']['aleatory_weight'],
+    backward_model = model.ua_tandem.load_backward_model(
+        config=config,
         experiment_repetition_id=experiment_repetition_id
     )
-    backward_model = utils.load_model(
-        model=backward_model,
-        path=os.path.join(backward_model_root_path, 'model.pt')
-    )
-    backward_model.eval()
 
-    target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
+    target = utils.load_tensor_from_mat_file(path=config[f'{target_name}_path']).to(settings.DEVICE)
 
-    design, mu_mean, sigma_epistemic, sigma_aleatory = inversion.ua_tandem.invert_performance(
+    design, mu_mean, sigma_epistemic, sigma_aleatory = inversion.ua_tandem.invert_target(
         backward_model=backward_model,
         mu_models=mu_models,
         sigma_models=sigma_models,
@@ -204,9 +122,10 @@ def inverse_design(
     utils.save_tensor_to_mat_file(tensor=sigma_aleatory, path=os.path.join(root_path, 'sigma_aleatory.mat'))
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_ua_tandem_inversion_directory(
@@ -218,4 +137,8 @@ def validate(
         experiment_repetition_id=experiment_repetition_id
     )
 
-    getattr(getattr(oracle, config['oracle']), 'validate')(config=config, root_path=root_path)
+    getattr(getattr(oracle, config['oracle']), 'evaluate_results')(
+        config=config,
+        root_path=root_path,
+        target_name=target_name
+    )

@@ -9,35 +9,18 @@ import torch.optim as optim
 from .. import inversion, loss, model, oracle, settings, utils
 
 
-def inverse_design(
+def invert_target(
             config: dict,
             experiment_repetition_id: int,
-            inversion_repetition_id: int
+            inversion_repetition_id: int,
+            target_name: str
         ) -> None:
 
-    forward_models = []
-    for model_id in range(len(config['uana']['mu_model']['activation_functions'])):
-        forward_model = model.uana.create_mu_model(
-            layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] +
-            [config['output_size']],
-            activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
-        )
-        mu_model_root_path = utils.get_uana_mu_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        forward_model = utils.load_model(
-            model=forward_model,
-            path=os.path.join(mu_model_root_path, f'model_{model_id}.pt')
-        )
-        forward_model.eval()
-        forward_models.append(forward_model)
+    forward_models = model.uana.load_mu_models(config=config, fine_tuned=False)
 
-    target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
+    target = utils.load_tensor_from_mat_file(path=config[f'{target_name}_path']).to(settings.DEVICE)
     design = torch.rand(
-        target.shape[0], config['input_size']
+        target.shape[0], config['design_size']
     ).type(torch.float).to(settings.DEVICE).clone().detach().requires_grad_(True)
 
     optimizer = optim.Adam([design], lr=config['nae']['inversion']['learning_rate'])
@@ -153,9 +136,10 @@ def aggregate_results(
     )
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_nae_inversion_directory(
@@ -167,4 +151,8 @@ def validate(
     )
     root_path = os.path.join(os.path.dirname(root_path), 'aggregated')
 
-    getattr(getattr(oracle, config['oracle']), 'validate')(config=config, root_path=root_path)
+    getattr(getattr(oracle, config['oracle']), 'evaluate_results')(
+        config=config,
+        root_path=root_path,
+        target_name=target_name
+    )

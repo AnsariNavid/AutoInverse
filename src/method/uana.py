@@ -16,14 +16,14 @@ def train_mu_model(
         ) -> None:
 
     mu_model = model.uana.create_mu_model(
-        layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] + [config['output_size']],
+        layers_size=[config['design_size']] + config['uana']['mu_model']['hidden_layers_size'] + [config['performance_size']],
         activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
     )
 
     train_tensor_dataset, test_tensor_dataset = utils.get_train_test_tensor_datasets(
         tensor_dataset=TensorDataset(
-            utils.load_tensor_from_mat_file(path=config['input_data_path']),
-            utils.load_tensor_from_mat_file(path=config['output_data_path'])
+            utils.load_tensor_from_mat_file(path=config['design_path']),
+            utils.load_tensor_from_mat_file(path=config['performance_path'])
         ),
         train_split_ratio=config['uana']['mu_model']['train_split_ratio']
     )
@@ -83,27 +83,17 @@ def train_sigma_model(
             model_id: int
         ) -> None:
 
-    mu_model = model.uana.create_mu_model(
-        layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] + [config['output_size']],
-        activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
-    )
-    mu_model_root_path = utils.get_uana_mu_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name'],
-        model_id=model_id
-    )
-    mu_model = utils.load_model(model=mu_model, path=os.path.join(mu_model_root_path, f'model_{model_id}.pt'))
+    mu_model = model.uana.load_mu_model(config=config, model_id=model_id, fine_tuned=False)
 
     sigma_model = model.uana.create_sigma_model(
-        layers_size=[config['input_size']] + config['uana']['sigma_model']['hidden_layers_size'] +
-                    [config['output_size']],
+        layers_size=[config['design_size']] + config['uana']['sigma_model']['hidden_layers_size'] +
+                    [config['performance_size']],
     )
 
     train_tensor_dataset, test_tensor_dataset = utils.get_train_test_tensor_datasets(
         tensor_dataset=TensorDataset(
-            utils.load_tensor_from_mat_file(path=config['input_data_path']),
-            utils.load_tensor_from_mat_file(path=config['output_data_path'])
+            utils.load_tensor_from_mat_file(path=config['design_path']),
+            utils.load_tensor_from_mat_file(path=config['performance_path'])
         ),
         train_split_ratio=config['uana']['sigma_model']['train_split_ratio']
     )
@@ -163,59 +153,31 @@ def train_sigma_model(
         model_id=model_id
     )
     utils.create_directory(directory=root_path)
+    mu_model_root_path = utils.get_uana_mu_model_directory(
+        results_base_path=config['results_base_path'],
+        experiment_name=config['experiment_name'],
+        config_name=config['config_name'],
+        model_id=model_id
+    )
 
     utils.save_json_file(data=data, path=os.path.join(root_path, 'info.json'))
     utils.save_model(model=sigma_model, path=os.path.join(root_path, f'model_{model_id}.pt'))
     utils.save_model(model=mu_model, path=os.path.join(mu_model_root_path, f'model_{model_id}_fine_tuned.pt'))
 
 
-def inverse_design(
+def invert_target(
             config: dict,
             experiment_repetition_id: int,
-            inversion_repetition_id: int
+            inversion_repetition_id: int,
+            target_name: str
         ) -> None:
 
-    mu_models = []
-    sigma_models = []
-    for model_id in range(len(config['uana']['mu_model']['activation_functions'])):
-        mu_model = model.uana.create_mu_model(
-            layers_size=[config['input_size']] + config['uana']['mu_model']['hidden_layers_size'] +
-            [config['output_size']],
-            activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
-        )
-        mu_model_root_path = utils.get_uana_mu_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        mu_model = utils.load_model(
-            model=mu_model,
-            path=os.path.join(mu_model_root_path, f'model_{model_id}_fine_tuned.pt')
-        )
-        mu_model.eval()
-        mu_models.append(mu_model)
+    mu_models = model.uana.load_mu_models(config=config, fine_tuned=True)
+    sigma_models = model.uana.load_sigma_models(config=config)
 
-        sigma_model = model.uana.create_sigma_model(
-            layers_size=[config['input_size']] + config['uana']['sigma_model']['hidden_layers_size'] +
-                        [config['output_size']],
-        )
-        sigma_model_root_path = utils.get_uana_sigma_model_directory(
-            results_base_path=config['results_base_path'],
-            experiment_name=config['experiment_name'],
-            config_name=config['config_name'],
-            model_id=model_id
-        )
-        sigma_model = utils.load_model(
-            model=sigma_model,
-            path=os.path.join(sigma_model_root_path, f'model_{model_id}.pt')
-        )
-        sigma_model.eval()
-        sigma_models.append(sigma_model)
-
-    target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
+    target = utils.load_tensor_from_mat_file(path=config[f'{target_name}_path']).to(settings.DEVICE)
     design = torch.rand(
-        target.shape[0], config['input_size']
+        target.shape[0], config['design_size']
     ).type(torch.float).to(settings.DEVICE).clone().detach().requires_grad_(True)
 
     optimizer = optim.Adam([design], lr=config['uana']['inversion']['learning_rate'])
@@ -360,9 +322,10 @@ def aggregate_results(
     )
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_uana_inversion_directory(
@@ -376,4 +339,8 @@ def validate(
     )
     root_path = os.path.join(os.path.dirname(root_path), 'aggregated')
 
-    getattr(getattr(oracle, config['oracle']), 'validate')(config=config, root_path=root_path)
+    getattr(getattr(oracle, config['oracle']), 'evaluate_results')(
+        config=config,
+        root_path=root_path,
+        target_name=target_name
+    )

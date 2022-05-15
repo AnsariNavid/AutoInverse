@@ -13,29 +13,16 @@ def train_backward_model(
             experiment_repetition_id: int
         ) -> None:
 
-    forward_model = model.na.create_forward_model(
-        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
-                    [config['output_size']]
-    )
-    forward_model_root_path = utils.get_na_forward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name']
-    )
-    forward_model = utils.load_model(
-        model=forward_model,
-        path=os.path.join(forward_model_root_path, 'model.pt')
-    )
-    forward_model.eval()
+    forward_model = model.na.load_forward_model(config=config)
 
     backward_model = model.tandem.create_backward_model(
-        layers_size=[config['output_size']] + config['tandem']['backward_model']['hidden_layers_size'] +
-                    [config['input_size']]
+        layers_size=[config['performance_size']] + config['tandem']['backward_model']['hidden_layers_size'] +
+                    [config['design_size']]
     )
 
     train_tensor_dataset, test_tensor_dataset = utils.get_train_test_tensor_datasets(
         tensor_dataset=TensorDataset(
-            utils.load_tensor_from_mat_file(path=config['output_data_path'])
+            utils.load_tensor_from_mat_file(path=config['performance_path'])
         ),
         train_split_ratio=config['tandem']['backward_model']['train_split_ratio']
     )
@@ -91,45 +78,22 @@ def train_backward_model(
     utils.save_model(model=backward_model, path=os.path.join(root_path, 'model.pt'))
 
 
-def inverse_design(
+def invert_target(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
-    forward_model = model.na.create_forward_model(
-        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
-                    [config['output_size']]
-    )
-    forward_model_root_path = utils.get_na_forward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name']
-    )
-    forward_model = utils.load_model(
-        model=forward_model,
-        path=os.path.join(forward_model_root_path, 'model.pt')
-    )
-    forward_model.eval()
+    forward_model = model.na.load_forward_model(config=config)
 
-    backward_model = model.tandem.create_backward_model(
-        layers_size=[config['output_size']] + config['tandem']['backward_model']['hidden_layers_size'] +
-                    [config['input_size']]
-    )
-    backward_model_root_path = utils.get_tandem_backward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name'],
+    backward_model = model.tandem.load_backward_model(
+        config=config,
         experiment_repetition_id=experiment_repetition_id
     )
-    backward_model = utils.load_model(
-        model=backward_model,
-        path=os.path.join(backward_model_root_path, 'model.pt')
-    )
-    backward_model.eval()
 
-    target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
+    target = utils.load_tensor_from_mat_file(path=config[f'{target_name}_path']).to(settings.DEVICE)
 
-    design, performance = inversion.tandem.invert_performance(
+    design, performance = inversion.tandem.invert_target(
         backward_model=backward_model,
         forward_model=forward_model,
         target=target
@@ -147,9 +111,10 @@ def inverse_design(
     utils.save_tensor_to_mat_file(tensor=performance, path=os.path.join(root_path, 'performance.mat'))
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_tandem_inversion_directory(
@@ -159,4 +124,8 @@ def validate(
         experiment_repetition_id=experiment_repetition_id
     )
 
-    getattr(getattr(oracle, config['oracle']), 'validate')(config=config, root_path=root_path)
+    getattr(getattr(oracle, config['oracle']), 'evaluate_results')(
+        config=config,
+        root_path=root_path,
+        target_name=target_name
+    )

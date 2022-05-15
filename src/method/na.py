@@ -15,14 +15,14 @@ def train_forward_model(
         ) -> None:
 
     forward_model = model.na.create_forward_model(
-        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
-                    [config['output_size']]
+        layers_size=[config['design_size']] + config['na']['forward_model']['hidden_layers_size'] +
+                    [config['performance_size']]
     )
 
     train_tensor_dataset, test_tensor_dataset = utils.get_train_test_tensor_datasets(
         tensor_dataset=TensorDataset(
-            utils.load_tensor_from_mat_file(path=config['input_data_path']),
-            utils.load_tensor_from_mat_file(path=config['output_data_path'])
+            utils.load_tensor_from_mat_file(path=config['design_path']),
+            utils.load_tensor_from_mat_file(path=config['performance_path'])
         ),
         train_split_ratio=config['na']['forward_model']['train_split_ratio']
     )
@@ -76,32 +76,18 @@ def train_forward_model(
     utils.save_model(model=forward_model, path=os.path.join(root_path, 'model.pt'))
 
 
-def inverse_design(
+def invert_target(
             config: dict,
             experiment_repetition_id: int,
-            inversion_repetition_id: int
+            inversion_repetition_id: int,
+            target_name: str
         ) -> None:
 
-    forward_models = []
-    forward_model = model.na.create_forward_model(
-        layers_size=[config['input_size']] + config['na']['forward_model']['hidden_layers_size'] +
-                    [config['output_size']]
-    )
-    forward_model_root_path = utils.get_na_forward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name']
-    )
-    forward_model = utils.load_model(
-        model=forward_model,
-        path=os.path.join(forward_model_root_path, 'model.pt')
-    )
-    forward_model.eval()
-    forward_models.append(forward_model)
+    forward_models = [model.na.load_forward_model(config=config)]
 
-    target = utils.load_tensor_from_mat_file(path=config['target_data_path']).to(settings.DEVICE)
+    target = utils.load_tensor_from_mat_file(path=config[f'{target_name}_path']).to(settings.DEVICE)
     design = torch.rand(
-        target.shape[0], config['input_size']
+        target.shape[0], config['design_size']
     ).type(torch.float).to(settings.DEVICE).clone().detach().requires_grad_(True)
 
     optimizer = optim.Adam([design], lr=config['na']['inversion']['learning_rate'])
@@ -217,9 +203,10 @@ def aggregate_results(
     )
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_na_inversion_directory(
@@ -231,4 +218,8 @@ def validate(
     )
     root_path = os.path.join(os.path.dirname(root_path), 'aggregated')
 
-    getattr(getattr(oracle, config['oracle']), 'validate')(config=config, root_path=root_path)
+    getattr(getattr(oracle, config['oracle']), 'evaluate_results')(
+        config=config,
+        root_path=root_path,
+        target_name=target_name
+    )
