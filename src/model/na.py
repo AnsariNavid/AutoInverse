@@ -1,9 +1,10 @@
+import os
 from typing import List
 
 import torch.nn as nn
 from torch.nn import Module
 
-from .. import settings
+from .. import settings, utils
 
 
 def create_forward_model(
@@ -18,3 +19,40 @@ def create_forward_model(
             layers.append(nn.ReLU())
 
     return nn.Sequential(*layers).to(settings.DEVICE)
+
+
+def load_forward_model(
+            config: dict
+        ) -> Module:
+
+    forward_model = create_forward_model(
+        layers_size=[config['design_size']] + config['na']['forward_model']['hidden_layers_size'] +
+                    [config['performance_size']]
+    )
+    forward_model_root_path = utils.get_na_forward_model_directory(
+        results_base_path=config['results_base_path'],
+        experiment_name=config['experiment_name'],
+        config_name=config['config_name']
+    )
+    forward_model = utils.load_model(
+        model=forward_model,
+        path=os.path.join(forward_model_root_path, 'model.pt')
+    )
+    forward_model.eval()
+
+    return forward_model
+
+
+def save_forward_model(
+            forward_model: Module,
+            config: dict
+        ) -> None:
+
+    forward_model_root_path = utils.get_na_forward_model_directory(
+        results_base_path=config['results_base_path'],
+        experiment_name=config['experiment_name'],
+        config_name=config['config_name']
+    )
+    utils.create_directory(directory=forward_model_root_path)
+
+    utils.save_model(model=forward_model, path=os.path.join(forward_model_root_path, 'model.pt'))
