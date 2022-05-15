@@ -43,20 +43,3 @@ def load_backward_model(
     backward_model.eval()
 
     return backward_model
-
-
-def save_backward_model(
-            backward_model: Module,
-            config: dict,
-            experiment_repetition_id: int
-        ) -> None:
-
-    backward_model_root_path = utils.get_tandem_backward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name'],
-        experiment_repetition_id=experiment_repetition_id
-    )
-    utils.create_directory(directory=backward_model_root_path)
-
-    utils.save_model(model=backward_model, path=os.path.join(backward_model_root_path, 'model.pt'))

@@ -41,18 +41,3 @@ def load_forward_model(
     forward_model.eval()
 
     return forward_model
-
-
-def save_forward_model(
-            forward_model: Module,
-            config: dict
-        ) -> None:
-
-    forward_model_root_path = utils.get_na_forward_model_directory(
-        results_base_path=config['results_base_path'],
-        experiment_name=config['experiment_name'],
-        config_name=config['config_name']
-    )
-    utils.create_directory(directory=forward_model_root_path)
-
-    utils.save_model(model=forward_model, path=os.path.join(forward_model_root_path, 'model.pt'))
