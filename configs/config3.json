@@ -4,12 +4,14 @@
     "config_name": "config3",
     "oracle": "spectral_printing",
 
-    "input_data_path": "/HPS/uana/work/data/spectral_printing_noisy/input.mat",
-    "output_data_path": "/HPS/uana/work/data/spectral_printing_noisy/output.mat",
-    "target_data_path": "/HPS/uana/work/data/spectral_printing_noisy/target.mat",
+    "design_path": "/HPS/uana/work/data/spectral_printing_noisy/design.mat",
+    "performance_path": "/HPS/uana/work/data/spectral_printing_noisy/performance.mat",
+    "tuning_target_path": "/HPS/uana/work/data/spectral_printing_noisy/tuning_target.mat",
+    "evaluation_target_path": "/HPS/uana/work/data/spectral_printing_noisy/evaluation_target.mat",
+    "total_target_path": "/HPS/uana/work/data/spectral_printing_noisy/total_target.mat",
 
-    "input_size": 8,
-    "output_size": 31,
+    "design_size": 8,
+    "performance_size": 31,
 
     "uana": {
         "mu_model": {
