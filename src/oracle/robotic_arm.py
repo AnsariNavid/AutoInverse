@@ -49,14 +49,15 @@ def _get_surrogate_error(
     return (numpy.square(targets - performances)).mean()
 
 
-def validate(
+def evaluate_results(
             config: dict,
-            root_path: str
+            root_path: str,
+            target_name: bool
         ) -> None:
 
     designs = utils.load_mat_file(path=os.path.join(root_path, 'design.mat'))['data']
     performances = utils.load_mat_file(path=os.path.join(root_path, 'performance.mat'))['data']
-    targets = utils.load_mat_file(path=config['target_data_path'])['data']
+    targets = utils.load_mat_file(path=config[f'{target_name}_path'])['data']
 
     re_simulation_error = _get_re_simulation_error(designs=designs, targets=targets)
     surrogate_error = _get_surrogate_error(performances=performances, targets=targets)
@@ -65,4 +66,4 @@ def validate(
         "re_simulation_error": re_simulation_error,
         "surrogate_error": surrogate_error
     }
-    utils.save_json_file(data=data, path=os.path.join(root_path, 'validation_results.json'))
+    utils.save_json_file(data=data, path=os.path.join(root_path, f'{target_name}_validation_results.json'))
