@@ -6,8 +6,8 @@
 
     "design_path": "/HPS/uana/work/data/robotic_arm/design.mat",
     "performance_path": "/HPS/uana/work/data/robotic_arm/performance.mat",
-    "tuning_target_path": "/HPS/uana/work/data/robotic_arm/tuning_target.mat",
-    "evaluation_target_path": "/HPS/uana/work/data/robotic_arm/evaluation_target.mat",
+    "tuning_path": "/HPS/uana/work/data/robotic_arm/tuning_target.mat",
+    "evaluation_path": "/HPS/uana/work/data/robotic_arm/evaluation_target.mat",
 
     "design_size": 4,
     "performance_size": 2,

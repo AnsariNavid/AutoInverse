@@ -103,7 +103,8 @@ def invert_target(
         results_base_path=config['results_base_path'],
         experiment_name=config['experiment_name'],
         config_name=config['config_name'],
-        experiment_repetition_id=experiment_repetition_id
+        experiment_repetition_id=experiment_repetition_id,
+        target_name=target_name
     )
     utils.create_directory(directory=root_path)
 
@@ -121,7 +122,8 @@ def evaluate_results(
         results_base_path=config['results_base_path'],
         experiment_name=config['experiment_name'],
         config_name=config['config_name'],
-        experiment_repetition_id=experiment_repetition_id
+        experiment_repetition_id=experiment_repetition_id,
+        target_name=target_name
     )
 
     getattr(getattr(oracle, config['oracle']), 'evaluate_results')(

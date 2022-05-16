@@ -6,8 +6,8 @@
 
     "design_path": "/HPS/uana/work/data/",
     "performance_path": "/HPS/uana/work/data/",
-    "tuning_target_path": "/HPS/uana/work/data/",
-    "evaluation_target_path": "/HPS/uana/work/data/",
+    "tuning_path": "/HPS/uana/work/data/",
+    "evaluation_path": "/HPS/uana/work/data/",
 
     "design_size": 0,
     "performance_size": 0,

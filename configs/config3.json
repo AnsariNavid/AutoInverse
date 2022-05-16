@@ -6,8 +6,8 @@
 
     "design_path": "/HPS/uana/work/data/spectral_printing_noisy/design.mat",
     "performance_path": "/HPS/uana/work/data/spectral_printing_noisy/performance.mat",
-    "tuning_target_path": "/HPS/uana/work/data/spectral_printing_noisy/tuning_target.mat",
-    "evaluation_target_path": "/HPS/uana/work/data/spectral_printing_noisy/evaluation_target.mat",
+    "tuning_path": "/HPS/uana/work/data/spectral_printing_noisy/tuning_target.mat",
+    "evaluation_path": "/HPS/uana/work/data/spectral_printing_noisy/evaluation_target.mat",
 
     "design_size": 8,
     "performance_size": 31,

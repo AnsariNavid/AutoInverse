@@ -212,7 +212,8 @@ def invert_target(
         epistemic_weight=config['uana']['inversion']['epistemic_weight'],
         aleatory_weight=config['uana']['inversion']['aleatory_weight'],
         experiment_repetition_id=experiment_repetition_id,
-        inversion_repetition_id=inversion_repetition_id
+        inversion_repetition_id=inversion_repetition_id,
+        target_name=target_name
     )
     utils.create_directory(directory=root_path)
 
@@ -226,7 +227,8 @@ def invert_target(
 
 def aggregate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_uana_inversion_directory(
@@ -236,7 +238,8 @@ def aggregate_results(
         epistemic_weight=config['uana']['inversion']['epistemic_weight'],
         aleatory_weight=config['uana']['inversion']['aleatory_weight'],
         experiment_repetition_id=experiment_repetition_id,
-        inversion_repetition_id=0
+        inversion_repetition_id=0,
+        target_name=target_name
     )
     root_path = os.path.dirname(root_path)
 
@@ -336,7 +339,8 @@ def evaluate_results(
         epistemic_weight=config['uana']['inversion']['epistemic_weight'],
         aleatory_weight=config['uana']['inversion']['aleatory_weight'],
         experiment_repetition_id=experiment_repetition_id,
-        inversion_repetition_id=0
+        inversion_repetition_id=0,
+        target_name=target_name
     )
     root_path = os.path.join(os.path.dirname(root_path), 'aggregated')
 

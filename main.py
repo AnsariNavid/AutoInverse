@@ -16,8 +16,7 @@ def pars_arguments() -> Any:
     parser.add_argument('-n', '--model_id', type=int, required=False)
     parser.add_argument('-e', '--experiment_repetition_id', type=int, required=False)
     parser.add_argument('-i', '--inversion_repetition_id', type=int, required=False)
-    parser.add_argument('-t', '--target_name', type=str, required=False,
-                        choices=['tuning_target', 'evaluation_target'])
+    parser.add_argument('-t', '--target_name', type=str, required=False, choices=['tuning', 'evaluation'])
 
     args = parser.parse_args()
 
@@ -36,8 +35,8 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id and --inversion_repetition_id and --target_name are required.")
 
         elif args.step == 'aggregate_results':
-            if args.experiment_repetition_id is None:
-                parser.error("--experiment_repetition_id is required.")
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
@@ -56,8 +55,8 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id and --inversion_repetition_id and --target_name are required.")
 
         elif args.step == 'aggregate_results':
-            if args.experiment_repetition_id is None:
-                parser.error("--experiment_repetition_id is required.")
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
@@ -73,8 +72,8 @@ def pars_arguments() -> Any:
                 parser.error("--experiment_repetition_id and --inversion_repetition_id and --target_name are required.")
 
         elif args.step == 'aggregate_results':
-            if args.experiment_repetition_id is None:
-                parser.error("--experiment_repetition_id is required.")
+            if (args.experiment_repetition_id is None) or (args.target_name is None):
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
@@ -150,7 +149,8 @@ if __name__ == '__main__':
         elif args.step == 'aggregate_results':
             src.method.uana.aggregate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'evaluate_results':
@@ -177,7 +177,8 @@ if __name__ == '__main__':
         elif args.step == 'aggregate_results':
             src.method.na.aggregate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'evaluate_results':
@@ -199,7 +200,8 @@ if __name__ == '__main__':
         elif args.step == 'aggregate_results':
             src.method.nae.aggregate_results(
                 config=config,
-                experiment_repetition_id=args.experiment_repetition_id
+                experiment_repetition_id=args.experiment_repetition_id,
+                target_name=args.target_name
             )
 
         elif args.step == 'evaluate_results':

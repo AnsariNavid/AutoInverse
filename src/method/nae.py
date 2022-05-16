@@ -48,7 +48,8 @@ def invert_target(
         experiment_name=config['experiment_name'],
         config_name=config['config_name'],
         experiment_repetition_id=experiment_repetition_id,
-        inversion_repetition_id=inversion_repetition_id
+        inversion_repetition_id=inversion_repetition_id,
+        target_name=target_name
     )
     utils.create_directory(directory=root_path)
 
@@ -60,7 +61,8 @@ def invert_target(
 
 def aggregate_results(
             config: dict,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> None:
 
     root_path = utils.get_nae_inversion_directory(
@@ -68,7 +70,8 @@ def aggregate_results(
         experiment_name=config['experiment_name'],
         config_name=config['config_name'],
         experiment_repetition_id=experiment_repetition_id,
-        inversion_repetition_id=0
+        inversion_repetition_id=0,
+        target_name=target_name
     )
     root_path = os.path.dirname(root_path)
 
@@ -146,7 +149,8 @@ def evaluate_results(
         experiment_name=config['experiment_name'],
         config_name=config['config_name'],
         experiment_repetition_id=experiment_repetition_id,
-        inversion_repetition_id=0
+        inversion_repetition_id=0,
+        target_name=target_name
     )
     root_path = os.path.join(os.path.dirname(root_path), 'aggregated')
 

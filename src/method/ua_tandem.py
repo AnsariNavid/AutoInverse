@@ -111,7 +111,8 @@ def invert_target(
         config_name=config['config_name'],
         epistemic_weight=config['ua_tandem']['backward_model']['epistemic_weight'],
         aleatory_weight=config['ua_tandem']['backward_model']['aleatory_weight'],
-        experiment_repetition_id=experiment_repetition_id
+        experiment_repetition_id=experiment_repetition_id,
+        target_name=target_name
     )
     utils.create_directory(directory=root_path)
 
@@ -133,7 +134,8 @@ def evaluate_results(
         config_name=config['config_name'],
         epistemic_weight=config['ua_tandem']['backward_model']['epistemic_weight'],
         aleatory_weight=config['ua_tandem']['backward_model']['aleatory_weight'],
-        experiment_repetition_id=experiment_repetition_id
+        experiment_repetition_id=experiment_repetition_id,
+        target_name=target_name
     )
 
     getattr(getattr(oracle, config['oracle']), 'evaluate_results')(

@@ -124,7 +124,8 @@ def get_uana_inversion_directory(
             epistemic_weight: float,
             aleatory_weight: float,
             experiment_repetition_id: int,
-            inversion_repetition_id: int
+            inversion_repetition_id: int,
+            target_name: str
         ) -> str:
 
     return os.path.join(
@@ -133,6 +134,7 @@ def get_uana_inversion_directory(
         config_name,
         "uana",
         "inversion",
+        target_name,
         f"{str(epistemic_weight)}_{str(aleatory_weight)}",
         str(experiment_repetition_id),
         str(inversion_repetition_id)
@@ -153,7 +155,8 @@ def get_na_inversion_directory(
             experiment_name: str,
             config_name: str,
             experiment_repetition_id: int,
-            inversion_repetition_id: int
+            inversion_repetition_id: int,
+            target_name: str
         ) -> str:
 
     return os.path.join(
@@ -162,6 +165,7 @@ def get_na_inversion_directory(
         config_name,
         "na",
         "inversion",
+        target_name,
         str(experiment_repetition_id),
         str(inversion_repetition_id)
     )
@@ -172,7 +176,8 @@ def get_nae_inversion_directory(
             experiment_name: str,
             config_name: str,
             experiment_repetition_id: int,
-            inversion_repetition_id: int
+            inversion_repetition_id: int,
+            target_name: str
         ) -> str:
 
     return os.path.join(
@@ -181,6 +186,7 @@ def get_nae_inversion_directory(
         config_name,
         "nae",
         "inversion",
+        target_name,
         str(experiment_repetition_id),
         str(inversion_repetition_id)
     )
@@ -207,7 +213,8 @@ def get_tandem_inversion_directory(
             results_base_path: str,
             experiment_name: str,
             config_name: str,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> str:
 
     return os.path.join(
@@ -216,6 +223,7 @@ def get_tandem_inversion_directory(
         config_name,
         "tandem",
         "inversion",
+        target_name,
         str(experiment_repetition_id)
     )
 
@@ -246,7 +254,8 @@ def get_ua_tandem_inversion_directory(
             config_name: str,
             epistemic_weight: float,
             aleatory_weight: float,
-            experiment_repetition_id: int
+            experiment_repetition_id: int,
+            target_name: str
         ) -> str:
 
     return os.path.join(
@@ -255,6 +264,7 @@ def get_ua_tandem_inversion_directory(
         config_name,
         "ua_tandem",
         "inversion",
+        target_name,
         f"{str(epistemic_weight)}_{str(aleatory_weight)}",
         str(experiment_repetition_id)
     )
