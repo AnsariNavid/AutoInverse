@@ -1,11 +1,10 @@
 import os
 import time
 
-import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
-from .. import inversion, model, oracle, settings, train, utils, loss
+from .. import inversion, loss, model, oracle, settings, train, utils
 
 
 def train_backward_model(

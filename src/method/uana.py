@@ -16,7 +16,8 @@ def train_mu_model(
         ) -> None:
 
     mu_model = model.uana.create_mu_model(
-        layers_size=[config['design_size']] + config['uana']['mu_model']['hidden_layers_size'] + [config['performance_size']],
+        layers_size=[config['design_size']] + config['uana']['mu_model']['hidden_layers_size'] +
+        [config['performance_size']],
         activation_function=getattr(nn, config['uana']['mu_model']['activation_functions'][model_id])()
     )
 

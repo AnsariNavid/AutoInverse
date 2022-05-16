@@ -3,7 +3,6 @@ import time
 
 import numpy
 import torch
-import torch.nn as nn
 import torch.optim as optim
 
 from .. import inversion, loss, model, oracle, settings, utils
