@@ -67,4 +67,4 @@ def evaluate_results(
         "surrogate_error": surrogate_error
     }
 
-    utils.save_json_file(data=data, path=os.path.join(root_path, f'{target_name}_validation_results.json'))
+    utils.save_json_file(data=data, path=os.path.join(root_path, f'{target_name}_evaluation_results.json'))
