@@ -8,7 +8,6 @@
     "performance_path": "/HPS/uana/work/data/airfoil/performance.mat",
     "tuning_target_path": "/HPS/uana/work/data/airfoil/tuning_target.mat",
     "evaluation_target_path": "/HPS/uana/work/data/airfoil/evaluation_target.mat",
-    "total_target_path": "/HPS/uana/work/data/airfoil/total_target.mat",
 
     "design_size": 384,
     "performance_size": 2,

@@ -8,7 +8,6 @@
     "performance_path": "/HPS/uana/work/data/spectral_printing_standard/performance.mat",
     "tuning_target_path": "/HPS/uana/work/data/spectral_printing_standard/tuning_target.mat",
     "evaluation_target_path": "/HPS/uana/work/data/spectral_printing_standard/evaluation_target.mat",
-    "total_target_path": "/HPS/uana/work/data/spectral_printing_standard/total_target.mat",
 
     "design_size": 8,
     "performance_size": 31,
