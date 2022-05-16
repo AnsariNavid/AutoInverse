@@ -17,7 +17,7 @@ def pars_arguments() -> Any:
     parser.add_argument('-e', '--experiment_repetition_id', type=int, required=False)
     parser.add_argument('-i', '--inversion_repetition_id', type=int, required=False)
     parser.add_argument('-t', '--target_name', type=str, required=False,
-                        choices=['tuning_target', 'evaluation_target', 'total_target'])
+                        choices=['tuning_target', 'evaluation_target'])
 
     args = parser.parse_args()
 
@@ -31,8 +31,9 @@ def pars_arguments() -> Any:
                 parser.error("--model_id is required.")
 
         elif args.step == 'invert_target':
-            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or\
+                 (args.target_name is None):
+                parser.error("--experiment_repetition_id and --inversion_repetition_id and --target_name are required.")
 
         elif args.step == 'aggregate_results':
             if args.experiment_repetition_id is None:
@@ -40,7 +41,7 @@ def pars_arguments() -> Any:
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         else:
             parser.error("invalid --step.")
@@ -50,8 +51,9 @@ def pars_arguments() -> Any:
             pass
 
         elif args.step == 'invert_target':
-            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or\
+                 (args.target_name is None):
+                parser.error("--experiment_repetition_id and --inversion_repetition_id and --target_name are required.")
 
         elif args.step == 'aggregate_results':
             if args.experiment_repetition_id is None:
@@ -59,15 +61,16 @@ def pars_arguments() -> Any:
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         else:
             parser.error("invalid --step.")
 
     if args.method == 'nae':
         if args.step == 'invert_target':
-            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id and --inversion_repetition_id are required.")
+            if (args.experiment_repetition_id is None) or (args.inversion_repetition_id is None)\
+                 or (args.target_name is None):
+                parser.error("--experiment_repetition_id and --inversion_repetition_id and --target_name are required.")
 
         elif args.step == 'aggregate_results':
             if args.experiment_repetition_id is None:
@@ -75,7 +78,7 @@ def pars_arguments() -> Any:
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         else:
             parser.error("invalid --step.")
@@ -87,11 +90,11 @@ def pars_arguments() -> Any:
 
         elif args.step == 'invert_target':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         else:
             parser.error("invalid --step.")
@@ -103,11 +106,11 @@ def pars_arguments() -> Any:
 
         elif args.step == 'invert_target':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         elif args.step == 'evaluate_results':
             if (args.experiment_repetition_id is None) or (args.target_name is None):
-                parser.error("--experiment_repetition_id is required.")
+                parser.error("--experiment_repetition_id and --target_name are required.")
 
         else:
             parser.error("invalid --step.")
