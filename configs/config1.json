@@ -31,8 +31,8 @@
             "number_of_epochs": 30
         },
         "inversion": {
-            "epistemic_weight": 10,
-            "aleatory_weight": 1,
+            "epistemic_weight": 5,
+            "aleatory_weight": 0.5,
             "criterion": "inversion_loss",
             "no_reduction_criterion": "no_reduction_inversion_loss",
             "learning_rate": 0.002,
