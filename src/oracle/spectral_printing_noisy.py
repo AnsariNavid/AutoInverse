@@ -87,7 +87,8 @@ def evaluate_results(
     oracle_performances = oracle_performances.detach().to('cpu').numpy()
 
     noisy_indices = numpy.where(0.4 <= designs[:, 3])[0]
-    oracle_performances[noisy_indices, :] = oracle_performances[noisy_indices, :] + (numpy.random.randn(len(noisy_indices), 31) / 10)
+    noise = (numpy.random.randn(len(noisy_indices), 31) / 10)
+    oracle_performances[noisy_indices, :] = oracle_performances[noisy_indices, :] + noise
 
     ink_density = _ink_density(designs=designs)
     mse = _mse(oracle_performances=oracle_performances, targets=targets)
