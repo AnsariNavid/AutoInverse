@@ -86,8 +86,8 @@
             "batch_size": 10,
             "learning_rate": 0.001,
             "learning_rate_decay_rate": 0.95,
-            "epistemic_weight": 10,
-            "aleatory_weight": 1,
+            "epistemic_weight": 0.5,
+            "aleatory_weight": 0.05,
             "criterion": "inversion_loss",
             "number_of_epochs": 50
         }
