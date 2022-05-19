@@ -36,10 +36,10 @@ def _get_oracle_performances(
 
     batch_size = designs.shape[0]
     designs = torch.from_numpy(designs).float()
-    oracle_performances = torch.empty(batch_size, 31)
+    oracle_performances = torch.empty(batch_size, 31).to(settings.DEVICE)
 
     for element_id in range(batch_size):
-        ensembled_outputs = torch.empty(20, 31)
+        ensembled_outputs = torch.empty(20, 31).to(settings.DEVICE)
         for model_id in range(20):
             ensembled_outputs[model_id, :] = forward_models[model_id](designs[element_id])
 
