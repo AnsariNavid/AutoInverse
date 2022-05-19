@@ -2,7 +2,7 @@
     "results_base_path": "/HPS/uana/work/results",
     "experiment_name": "spectral_printing_noisy",
     "config_name": "config3",
-    "oracle": "spectral_printing",
+    "oracle": "spectral_printing_noisy",
 
     "design_path": "/HPS/uana/work/data/spectral_printing_noisy/design.mat",
     "performance_path": "/HPS/uana/work/data/spectral_printing_noisy/performance.mat",
