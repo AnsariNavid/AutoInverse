@@ -1,0 +1,67 @@
+{
+    "results_base_path": "/HPS/uana/work/results",
+    "experiment_name": "soft_robot_sparse",
+    "config_name": "config9",
+    "oracle": "",
+
+    "design_path": "/HPS/uana/work/data/soft_robot_sparse/design.mat",
+    "performance_path": "/HPS/uana/work/data/soft_robot_sparse/performance.mat",
+    "tuning_path": "/HPS/uana/work/data/soft_robot_sparse/tuning_target.mat",
+    "evaluation_path": "/HPS/uana/work/data/soft_robot_sparse/evaluation_target.mat",
+
+    "design_size": 40,
+    "performance_size": 206,
+
+    "uana": {
+        "mu_model": {
+            "hidden_layers_size": [300, 1500, 1500, 300],
+            "activation_functions": ["ReLU", "CELU", "LeakyReLU", "ELU", "Hardswish", "Tanh", "ReLU", "CELU", "LeakyReLU", "Tanh"],
+            "train_split_ratio": 0.9,
+            "batch_size": 16,
+            "learning_rate": 0.0005,
+            "learning_rate_decay_rate": 0.95,
+            "number_of_epochs": 200
+        },
+        "sigma_model": {
+            "hidden_layers_size": [100, 100, 100],
+            "train_split_ratio": 0.9,
+            "batch_size": 16,
+            "learning_rate": 0.00005,
+            "learning_rate_decay_rate": 0.95,
+            "number_of_epochs": 100
+        }
+    },
+    "na": {
+        "forward_model": {
+            "hidden_layers_size": [2000, 5000, 5000, 2000],
+            "train_split_ratio": 0.9,
+            "batch_size": 16,
+            "learning_rate": 0.0005,
+            "learning_rate_decay_rate": 0.95,
+            "number_of_epochs": 200
+        }
+    },
+    "tandem": {
+        "backward_model": {
+            "hidden_layers_size": [300, 1500, 1500, 300],
+            "train_split_ratio": 0.9,
+            "batch_size": 16,
+            "learning_rate": 0.0005,
+            "learning_rate_decay_rate": 0.95,
+            "number_of_epochs": 150
+        }
+    },
+    "ua_tandem": {
+        "backward_model": {
+            "hidden_layers_size": [300, 1500, 1500, 300],
+            "train_split_ratio": 0.9,
+            "batch_size": 16,
+            "learning_rate": 0.0005,
+            "learning_rate_decay_rate": 0.95,
+            "epistemic_weight": 2,
+            "aleatory_weight": 0.2,
+            "criterion": "inversion_loss",
+            "number_of_epochs": 150
+        }
+    }
+}
