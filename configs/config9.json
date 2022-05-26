@@ -60,7 +60,7 @@
             "learning_rate_decay_rate": 0.95,
             "epistemic_weight": 2,
             "aleatory_weight": 0.2,
-            "criterion": "inversion_loss",
+            "criterion": "softrobot_loss",
             "number_of_epochs": 150
         }
     }
