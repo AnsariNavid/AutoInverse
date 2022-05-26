@@ -1,13 +1,13 @@
 {
     "results_base_path": "/HPS/uana/work/results",
-    "experiment_name": "robotic_arm",
+    "experiment_name": "multi_joint_robot",
     "config_name": "config1",
-    "oracle": "robotic_arm",
+    "oracle": "multi_joint_robot",
 
-    "design_path": "/HPS/uana/work/data/robotic_arm/design.mat",
-    "performance_path": "/HPS/uana/work/data/robotic_arm/performance.mat",
-    "tuning_path": "/HPS/uana/work/data/robotic_arm/tuning_target.mat",
-    "evaluation_path": "/HPS/uana/work/data/robotic_arm/evaluation_target.mat",
+    "design_path": "/HPS/uana/work/data/multi_joint_robot/design.mat",
+    "performance_path": "/HPS/uana/work/data/multi_joint_robot/performance.mat",
+    "tuning_path": "/HPS/uana/work/data/multi_joint_robot/tuning_target.mat",
+    "evaluation_path": "/HPS/uana/work/data/multi_joint_robot/evaluation_target.mat",
 
     "design_size": 4,
     "performance_size": 2,

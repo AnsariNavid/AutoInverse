@@ -15,7 +15,7 @@ You can download the whole code repository from [here]().
 --------------------------------------------------
 First, please unzip [data.zip](https://drive.google.com/file/d/1E7inIOtmOUvFoDT-QIs_87h9GSS5HHEB/view?usp=sharing) and [results.zip](https://drive.google.com/file/d/1f8PnU8XseDAHoAYwPqgYJNAFRlzymTmw/view?usp=sharing) (if you want to do all the experiments from scratch then don't unzip results.zip, but if you want to use some parts of our results, like trained models, then you need to unzip results.zip) in the project directory. Now please find the details below, on how to run an experiment.
 
-If you want to train the first mu model in the uana method for the robotic_arm experiment, you can use the following command:
+If you want to train the first mu model in the uana method for the multi_joint_robot experiment, you can use the following command:
 
 - python main.py \--config configs/config1.json \--method uana \--step train_mu_model \--model_id 0
 
@@ -111,13 +111,13 @@ Or, if you want to evaluate results of the spectral_printing_standard inverted t
 
 #### MINI:
 
-You can find the details [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design).
+You can find the repository [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design).
 
 --------------------------------------------------
 
 #### INN:
 
-You can find the details [here](https://github.com/BensonRen/BDIMNNA).
+You can find the repository [here](https://github.com/BensonRen/BDIMNNA).
 
 --------------------------------------------------
 #### Help:
@@ -132,7 +132,7 @@ You can find the details [here](https://github.com/BensonRen/BDIMNNA).
 --------------------------------------------------
 --------------------------------------------------
 ### Configs:
-- **robotic_arm:** config1.json
+- **multi_joint_robot:** config1.json
 - **spectral_printing_noisy:** config3.json
 - **spectral_printing_sparse:** config4.json
 - **spectral_printing_standard:** config5.json
