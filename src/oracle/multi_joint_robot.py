@@ -32,7 +32,7 @@ def _determine_final_position(
     return current_position, numpy.array(positions)
 
 
-def _get_re_simulation_error(
+def _get_nfp_error(
             designs: numpy.ndarray,
             targets: numpy.ndarray
         ) -> float:
@@ -59,11 +59,11 @@ def evaluate_results(
     performances = utils.load_mat_file(path=os.path.join(root_path, 'performance.mat'))['data']
     targets = utils.load_mat_file(path=config[f'{target_name}_path'])['data']
 
-    re_simulation_error = _get_re_simulation_error(designs=designs, targets=targets)
+    nfp_error = _get_nfp_error(designs=designs, targets=targets)
     surrogate_error = _get_surrogate_error(performances=performances, targets=targets)
 
     data = {
-        "re_simulation_error": re_simulation_error,
+        "nfp_error": nfp_error,
         "surrogate_error": surrogate_error
     }
 

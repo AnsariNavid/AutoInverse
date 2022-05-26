@@ -48,7 +48,7 @@ def _get_oracle_performances(
     return oracle_performances.detach().clone()
 
 
-def _mse(
+def _get_nfp_error(
             oracle_performances: numpy.ndarray,
             targets: numpy.ndarray
         ) -> float:
@@ -56,7 +56,7 @@ def _mse(
     return (numpy.square(targets - oracle_performances)).mean()
 
 
-def _ink_density(
+def _get_ink_density(
             designs: numpy.ndarray
         ) -> dict:
 
@@ -85,12 +85,12 @@ def evaluate_results(
     targets = utils.load_mat_file(path=config[f'{target_name}_path'])['data']
     oracle_performances = _get_oracle_performances(designs=designs)
 
-    ink_density = _ink_density(designs=designs)
-    mse = _mse(oracle_performances=oracle_performances.detach().to('cpu').numpy(), targets=targets)
+    ink_density = _get_ink_density(designs=designs)
+    nfp_error = _get_nfp_error(oracle_performances=oracle_performances.detach().to('cpu').numpy(), targets=targets)
 
     data = {
         "ink_density": ink_density,
-        "mse": mse
+        "nfp_error": nfp_error
     }
 
     utils.save_json_file(data=data, path=os.path.join(root_path, 'evaluation_results.json'))
