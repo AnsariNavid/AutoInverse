@@ -108,6 +108,18 @@ Or, if you want to evaluate results of the spectral_printing_standard inverted t
 - python main.py \--config < config-file-path > \--method ua_tandem \--step evaluate_results \--experiment_repetition_id < experiment-repetition-id > \--target_name < evaluation/tuning >
 
 --------------------------------------------------
+
+#### MINI:
+
+You can find the details [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design).
+
+--------------------------------------------------
+
+#### INN:
+
+You can find the details [here](https://github.com/BensonRen/BDIMNNA).
+
+--------------------------------------------------
 #### Help:
 - **\--config**, flag to specify config file path.
 - **\--method**, flag to specify method.
@@ -115,7 +127,7 @@ Or, if you want to evaluate results of the spectral_printing_standard inverted t
 - **\--model_id**, flag to specify the model id, starting from 0.
 - **\--experiment_repetition_id**, flag to specify the experiment repetition id (if you want to repeat an experiment, use the same experiment_repetition_id in diffrent steps of a method), starting from 0.
 - **\--inversion_repetition_id**, flag to specify the inversion repetition id, in methods that repeat the inversion it is necessary to provide this flag, starting from 0.
-- **\--target_name**, flag to specify the target name, if you want to tune the parameters in the config file then use 'tuning' as target_name otherwise use 'evaluation' to use the proper target file.
+- **\--target_name**, flag to specify the target name, if you want to tune the parameters in the config file then use 'tuning' as target_name otherwise use 'evaluation' to use the proper target file (results of tuning are not available in the results.zip, so if you want to use tuning for this flag then you have to run all the steps of a method that requires \--target_name from the beginning with tuning as value of this flag).
 
 --------------------------------------------------
 --------------------------------------------------
