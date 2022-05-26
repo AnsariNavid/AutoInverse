@@ -1,13 +1,13 @@
 {
     "results_base_path": "/HPS/uana/work/results",
-    "experiment_name": "spectral_printing_noisy",
+    "experiment_name": "spectral_printer_noisy",
     "config_name": "config3",
-    "oracle": "spectral_printing_noisy",
+    "oracle": "spectral_printer_noisy",
 
-    "design_path": "/HPS/uana/work/data/spectral_printing_noisy/design.mat",
-    "performance_path": "/HPS/uana/work/data/spectral_printing_noisy/performance.mat",
-    "tuning_path": "/HPS/uana/work/data/spectral_printing_noisy/tuning_target.mat",
-    "evaluation_path": "/HPS/uana/work/data/spectral_printing_noisy/evaluation_target.mat",
+    "design_path": "/HPS/uana/work/data/spectral_printer_noisy/design.mat",
+    "performance_path": "/HPS/uana/work/data/spectral_printer_noisy/performance.mat",
+    "tuning_path": "/HPS/uana/work/data/spectral_printer_noisy/tuning_target.mat",
+    "evaluation_path": "/HPS/uana/work/data/spectral_printer_noisy/evaluation_target.mat",
 
     "design_size": 8,
     "performance_size": 31,

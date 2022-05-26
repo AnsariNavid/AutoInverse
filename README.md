@@ -19,17 +19,17 @@ If you want to train the first mu model in the uana method for the multi_joint_r
 
 - python main.py \--config configs/config1.json \--method uana \--step train_mu_model \--model_id 0
 
-Or, if you want to invert the spectral_printing_noisy target data using na method, you can use the following command:
+Or, if you want to invert the spectral_printer_noisy target data using na method, you can use the following command:
 
 - python main.py \--config configs/config3.json \--method na \--step invert_target \--experiment_repetition_id 0 \--inversion_repetition_id 0 \--target_name evaluation
 
-(if you want to invert the spectral_printing_noisy target data using na method for 50 times then you need to run above command with inversion_repetition_id from 0 to 49).
+(if you want to invert the spectral_printer_noisy target data using na method for 50 times then you need to run above command with inversion_repetition_id from 0 to 49).
 
-Or, if you want to aggregate results of the spectral_printing_sparse inverted targets using nae method, you can use the following command:
+Or, if you want to aggregate results of the spectral_printer_sparse inverted targets using nae method, you can use the following command:
 
 - python main.py \--config configs/config4.json \--method nae \--step aggregate_results \--experiment_repetition_id 0 \--target_name evaluation
 
-Or, if you want to evaluate results of the spectral_printing_standard inverted targets using ua_tandem method, you can use the following command:
+Or, if you want to evaluate results of the spectral_printer_standard inverted targets using ua_tandem method, you can use the following command:
 
 - python main.py \--config configs/config5.json \--method ua_tandem \--step evaluate_results \--experiment_repetition_id 0 \--target_name evaluation
 
@@ -133,7 +133,7 @@ You can find the repository [here](https://github.com/BensonRen/BDIMNNA).
 --------------------------------------------------
 ### Configs:
 - **multi_joint_robot:** config1.json
-- **spectral_printing_noisy:** config3.json
-- **spectral_printing_sparse:** config4.json
-- **spectral_printing_standard:** config5.json
-- **spectral_printing_sparse (ReLU):** config6.json
+- **spectral_printer_noisy:** config3.json
+- **spectral_printer_sparse:** config4.json
+- **spectral_printer_standard:** config5.json
+- **spectral_printer_sparse (ReLU):** config6.json

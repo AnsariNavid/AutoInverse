@@ -1,2 +1,2 @@
-from . import (multi_joint_robot, spectral_printing,  # noqa: F401
-               spectral_printing_noisy)
+from . import (multi_joint_robot, spectral_printer,  # noqa: F401
+               spectral_printer_noisy)

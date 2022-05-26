@@ -28,7 +28,7 @@ def _get_oracle_performances(
 
         forward_model = utils.load_model(
             model=forward_model,
-            path=os.path.join('src', 'oracle', 'spectral_printing_oracle_models', f'model_{model_id}.pt')
+            path=os.path.join('src', 'oracle', 'spectral_printer_oracle_models', f'model_{model_id}.pt')
         )
         forward_model.eval()
 
