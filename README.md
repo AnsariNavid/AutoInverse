@@ -1,8 +1,5 @@
 # Autoinverse
 
-Please find the repositories of method **MINI** and **INN** respectively [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design) and [here](https://github.com/BensonRen/BDIMNNA).
-For the sake of terminology, the term **Oracle** we used in the code is equivalent to the term **NFP** in the paper.
-
 --------------------------------------------------
 --------------------------------------------------
 
@@ -10,34 +7,14 @@ For the sake of terminology, the term **Oracle** we used in the code is equivale
 - PyTorch (CUDA)
 - Numpy
 - Scipy
-
 --------------------------------------------------
 --------------------------------------------------
-First, please unzip [data.zip](https://drive.google.com/file/d/1E7inIOtmOUvFoDT-QIs_87h9GSS5HHEB/view?usp=sharing) and [results.zip](https://drive.google.com/file/d/1f8PnU8XseDAHoAYwPqgYJNAFRlzymTmw/view?usp=sharing) (if you want to do all the experiments from scratch then don't unzip results.zip, but if you want to use some parts of our results, like trained models, then you need to unzip results.zip) in the project directory. Now please find the details below, on how to run an experiment.
-
-If you want to train the first mu model in the uana method for the multi_joint_robot experiment, you can use the following command:
-
-- python main.py \--config configs/config1.json \--method uana \--step train_mu_model \--model_id 0
-
-Or, if you want to invert the spectral_printer_noisy target data using na method, you can use the following command:
-
-- python main.py \--config configs/config3.json \--method na \--step invert_target \--experiment_repetition_id 0 \--inversion_repetition_id 0 \--target_name evaluation
-
-(if you want to invert the spectral_printer_noisy target data using na method for 50 times then you need to run above command with inversion_repetition_id from 0 to 49).
-
-Or, if you want to aggregate results of the spectral_printer_sparse inverted targets using nae method, you can use the following command:
-
-- python main.py \--config configs/config4.json \--method nae \--step aggregate_results \--experiment_repetition_id 0 \--target_name evaluation
-
-Or, if you want to evaluate results of the spectral_printer_standard inverted targets using ua_tandem method, you can use the following command:
-
-- python main.py \--config configs/config5.json \--method ua_tandem \--step evaluate_results \--experiment_repetition_id 0 \--target_name evaluation
 
 --------------------------------------------------
 --------------------------------------------------
 
 ### Methods:
-
+Please note that the term **Oracle** used in the code is equivalent to the term **NFP** in the paper.
 --------------------------------------------------
 
 #### NA:
@@ -127,3 +104,30 @@ Or, if you want to evaluate results of the spectral_printer_standard inverted ta
 - **soft_robot_noisy:** config8.json
 - **soft_robot_sparse:** config9.json
 - **soft_robot_standard:** config10.json
+
+### Examples
+Start by unziping [data.zip](https://drive.google.com/file/d/1E7inIOtmOUvFoDT-QIs_87h9GSS5HHEB/view?usp=sharing) and [results.zip](https://drive.google.com/file/d/1f8PnU8XseDAHoAYwPqgYJNAFRlzymTmw/view?usp=sharing) in the project directory.
+Note that you can either use the pretrained models or train your own deep ensembles from the scratch.
+Use the following commands to run the experiments:
+
+If you want to train the first mu model in the uana method for the multi_joint_robot experiment, you can use the following command:
+
+- python main.py \--config configs/config1.json \--method uana \--step train_mu_model \--model_id 0
+
+Or, if you want to invert the spectral_printer_noisy target data using na method, you can use the following command:
+
+- python main.py \--config configs/config3.json \--method na \--step invert_target \--experiment_repetition_id 0 \--inversion_repetition_id 0 \--target_name evaluation
+
+(if you want to invert the spectral_printer_noisy target data using na method for 50 times then you need to run above command with inversion_repetition_id from 0 to 49).
+
+Or, if you want to aggregate results of the spectral_printer_sparse inverted targets using nae method, you can use the following command:
+
+- python main.py \--config configs/config4.json \--method nae \--step aggregate_results \--experiment_repetition_id 0 \--target_name evaluation
+
+Or, if you want to evaluate results of the spectral_printer_standard inverted targets using ua_tandem method, you can use the following command:
+
+- python main.py \--config configs/config5.json \--method ua_tandem \--step evaluate_results \--experiment_repetition_id 0 \--target_name evaluation
+
+
+## External libraries:
+Please find the repositories of methods **MINI** and **INN** respectively [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design) and [here](https://github.com/BensonRen/BDIMNNA).
