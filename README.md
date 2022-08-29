@@ -1,9 +1,7 @@
-# Auto-Inverse
+# Autoinverse
 
-
-You can download the whole repository from [here]().
-For details about method MINI you can find the repository [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design).
-For details about method INN you can find the repository [here](https://github.com/BensonRen/BDIMNNA).
+Please find the repositories of method **MINI** and **INN** respectively [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design) and [here](https://github.com/BensonRen/BDIMNNA).
+For the sake of terminology, the term **Oracle** we used in the code is equivalent to the term **NFP** in the paper.
 
 --------------------------------------------------
 --------------------------------------------------
