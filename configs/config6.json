@@ -1,13 +1,13 @@
 {
-    "results_base_path": "/HPS/uana/work/results",
+    "results_base_path": "results",
     "experiment_name": "spectral_printer_sparse",
     "config_name": "config6",
     "oracle": "spectral_printer",
 
-    "design_path": "/HPS/uana/work/data/spectral_printer_sparse/design.mat",
-    "performance_path": "/HPS/uana/work/data/spectral_printer_sparse/performance.mat",
-    "tuning_path": "/HPS/uana/work/data/spectral_printer_sparse/tuning_target.mat",
-    "evaluation_path": "/HPS/uana/work/data/spectral_printer_sparse/evaluation_target.mat",
+    "design_path": "data/spectral_printer_sparse/design.mat",
+    "performance_path": "data/spectral_printer_sparse/performance.mat",
+    "tuning_path": "data/spectral_printer_sparse/tuning_target.mat",
+    "evaluation_path": "data/spectral_printer_sparse/evaluation_target.mat",
 
     "design_size": 8,
     "performance_size": 31,

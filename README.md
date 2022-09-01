@@ -1,3 +1,4 @@
+
 # Autoinverse
 
 --------------------------------------------------
@@ -7,14 +8,65 @@
 - PyTorch (CUDA)
 - Numpy
 - Scipy
---------------------------------------------------
---------------------------------------------------
 
 --------------------------------------------------
 --------------------------------------------------
 
-### Methods:
-Please note that the term **Oracle** used in the code is equivalent to the term **NFP** in the paper.
+### Experiments:
+
+First please download and unziping [data.zip](https://drive.google.com/file/d/1RQORP1mfD37XVs3IXLl_2eX13qb_DRVS/view?usp=sharing) in the project directory.<br>
+
+*If you want to use our pre-trained networks, you can download and unziping [results.zip](https://drive.google.com/file/d/1oPBXO9ADnMSZxek9dszNl_92mAQ0efa9/view?usp=sharing) in the project directory as well, then you can skip the steps regarding training networks menthoned bellow for each experiment.*
+
+*You can refer to the section **Help** for more information about the each flag we used bellow.*<br>
+
+*Please note that the term **Oracle** used in the code is equivalent to the term **NFP** in the paper.*<br>
+
+#### Section 4.2 (Quantitative comparison of different neural inversion methods) - Table 1:
+
+(description)<br>
+
+For running this experiment please follow these steps:<br>
+
+```bash
+
+```
+
+#### Section 4.3 (Neural inversion in the presence of imperfect data) - Table 2:
+
+(description)<br>
+
+For running this experiment please follow these steps:<br>
+
+```bash
+
+```
+
+#### Section C.1 (Counterpart results of tandem and UA-tandem for spectral printer) - Table 5:
+
+(description)<br>
+
+For running this experiment please follow these steps:<br>
+
+```bash
+
+```
+
+--------------------------------------------------
+--------------------------------------------------
+
+### Help:
+- **\--config**, flag to specify config file path (*e.g., \--config configs/config1.json*).
+- **\--method**, flag to specify method (*e.g., \--method ua_tandem*).
+- **\--step**, flag to specify step of the specified method (*e.g., \--step aggregate_results*).
+- **\--model_id**, flag to specify the model id, starting from 0 (*e.g., \--model_id 5*).
+- **\--experiment_repetition_id**, flag to specify the experiment repetition id (if you want to repeat an experiment, use the same experiment_repetition_id in diffrent steps of a method), starting from 0 (*e.g., \--experiment_repetition_id 1*).
+- **\--inversion_repetition_id**, flag to specify the inversion repetition id, in methods that repeat the inversion it is necessary to provide this flag, starting from 0 (*e.g., \--inversion_repetition_id 25*).
+- **\--target_name**, flag to specify the target name, if you want to tune the parameters in the config file then use 'tuning' as target_name otherwise use 'evaluation' to use the proper target file (results of tuning are not available in the results.zip, so if you want to use tuning for this flag then you have to run all the steps of a method that requires \--target_name from the beginning with 'tuning' as value of this flag) (*e.g., \--target_name evaluation*).
+
+--------------------------------------------------
+--------------------------------------------------
+
 --------------------------------------------------
 
 #### NA:
@@ -84,14 +136,7 @@ Please note that the term **Oracle** used in the code is equivalent to the term 
 ##### Evaluate Results:
 - python main.py \--config < config-file-path > \--method ua_tandem \--step evaluate_results \--experiment_repetition_id < experiment-repetition-id > \--target_name < evaluation / tuning >
 --------------------------------------------------
-#### Help:
-- **\--config**, flag to specify config file path (e.g., \--config configs/config1.json).
-- **\--method**, flag to specify method (e.g., \--method ua_tandem).
-- **\--step**, flag to specify step of the specified method (e.g., \--step aggregate_results).
-- **\--model_id**, flag to specify the model id, starting from 0 (e.g., \--model_id 5).
-- **\--experiment_repetition_id**, flag to specify the experiment repetition id (if you want to repeat an experiment, use the same experiment_repetition_id in diffrent steps of a method), starting from 0 (e.g., \--experiment_repetition_id 1).
-- **\--inversion_repetition_id**, flag to specify the inversion repetition id, in methods that repeat the inversion it is necessary to provide this flag, starting from 0 (e.g., \--inversion_repetition_id 25).
-- **\--target_name**, flag to specify the target name, if you want to tune the parameters in the config file then use 'tuning' as target_name otherwise use 'evaluation' to use the proper target file (results of tuning are not available in the results.zip, so if you want to use tuning for this flag then you have to run all the steps of a method that requires \--target_name from the beginning with tuning as value of this flag) (e.g., \--target_name evaluation).
+
 
 --------------------------------------------------
 --------------------------------------------------
@@ -129,5 +174,5 @@ Or, if you want to evaluate results of the spectral_printer_standard inverted ta
 - python main.py \--config configs/config5.json \--method ua_tandem \--step evaluate_results \--experiment_repetition_id 0 \--target_name evaluation
 
 
-## External libraries:
+### External libraries:
 Please find the repositories of methods **MINI** and **INN** respectively [here](https://gitlab.mpi-klsb.mpg.de/nansari/mixed-integer-neural-inverse-design) and [here](https://github.com/BensonRen/BDIMNNA).

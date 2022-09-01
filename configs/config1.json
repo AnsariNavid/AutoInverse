@@ -1,13 +1,13 @@
 {
-    "results_base_path": "/HPS/uana/work/results",
+    "results_base_path": "results",
     "experiment_name": "multi_joint_robot",
     "config_name": "config1",
     "oracle": "multi_joint_robot",
 
-    "design_path": "/HPS/uana/work/data/multi_joint_robot/design.mat",
-    "performance_path": "/HPS/uana/work/data/multi_joint_robot/performance.mat",
-    "tuning_path": "/HPS/uana/work/data/multi_joint_robot/tuning_target.mat",
-    "evaluation_path": "/HPS/uana/work/data/multi_joint_robot/evaluation_target.mat",
+    "design_path": "data/multi_joint_robot/design.mat",
+    "performance_path": "data/multi_joint_robot/performance.mat",
+    "tuning_path": "data/multi_joint_robot/tuning_target.mat",
+    "evaluation_path": "data/multi_joint_robot/evaluation_target.mat",
 
     "design_size": 4,
     "performance_size": 2,

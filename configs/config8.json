@@ -1,13 +1,13 @@
 {
-    "results_base_path": "/HPS/uana/work/results",
+    "results_base_path": "results",
     "experiment_name": "soft_robot_noisy",
     "config_name": "config8",
     "oracle": "",
 
-    "design_path": "/HPS/uana/work/data/soft_robot_noisy/design.mat",
-    "performance_path": "/HPS/uana/work/data/soft_robot_noisy/performance.mat",
-    "tuning_path": "/HPS/uana/work/data/soft_robot_noisy/tuning_target.mat",
-    "evaluation_path": "/HPS/uana/work/data/soft_robot_noisy/evaluation_target.mat",
+    "design_path": "data/soft_robot_noisy/design.mat",
+    "performance_path": "data/soft_robot_noisy/performance.mat",
+    "tuning_path": "data/soft_robot_noisy/tuning_target.mat",
+    "evaluation_path": "data/soft_robot_noisy/evaluation_target.mat",
 
     "design_size": 40,
     "performance_size": 206,
