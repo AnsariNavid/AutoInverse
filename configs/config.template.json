@@ -1,13 +1,13 @@
 {
-    "results_base_path": "/HPS/uana/work/results",
+    "results_base_path": "results",
     "experiment_name": "",
     "config_name": "",
     "oracle": "",
 
-    "design_path": "/HPS/uana/work/data/",
-    "performance_path": "/HPS/uana/work/data/",
-    "tuning_path": "/HPS/uana/work/data/",
-    "evaluation_path": "/HPS/uana/work/data/",
+    "design_path": "data",
+    "performance_path": "data",
+    "tuning_path": "data",
+    "evaluation_path": "data",
 
     "design_size": 0,
     "performance_size": 0,

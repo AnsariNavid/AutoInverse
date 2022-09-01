@@ -1,11 +1,11 @@
 {
-    "results_base_path": "/HPS/uana/work/results",
+    "results_base_path": "results",
     "experiment_name": "soft_robot_standard",
     "config_name": "config10",
     "oracle": "",
 
-    "design_path": "/HPS/uana/work/data/soft_robot_standard/design.mat",
-    "performance_path": "/HPS/uana/work/data/soft_robot_standard/performance.mat",
+    "design_path": "data/soft_robot_standard/design.mat",
+    "performance_path": "data/soft_robot_standard/performance.mat",
     "tuning_path": "",
     "evaluation_path": "",
 
