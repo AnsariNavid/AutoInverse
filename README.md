@@ -253,6 +253,96 @@ Results will be available in the following directory: XYZ<br>
 
 (description)<br>
 
+**Tandem-Standard:**
+```bash
+# Please note that we use NA-Standard forward model as the forward model in this method. So, if you have not done it yet it is required that you run step 1 of NA-Standard prior to this.
+
+# Step 1: train backward model
+python main.py --config configs/config5.json --method tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs/config5.json --method tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs/config5.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**Tandem-Sparse:**
+```bash
+# Please note that we use NA-Sparse forward model as the forward model in this method. So, if you have not done it yet it is required that you run step 1 of NA-Sparse prior to this.
+
+# Step 1: train backward model
+python main.py --config configs/config4.json --method tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs/config4.json --method tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs/config4.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**Tandem-Noisy:**
+```bash
+# Please note that we use NA-Noisy forward model as the forward model in this method. So, if you have not done it yet it is required that you run step 1 of NA-Noisy prior to this.
+
+# Step 1: train backward model
+python main.py --config configs/config3.json --method tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs/config3.json --method tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs/config3.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**UA-Tandem-Standard:**
+```bash
+# Please note that we use UANA-Standard mu and sigma models as the mu and sigma models in this method. So, if you have not done it yet it is required that you run step 1 and 2 of UANA-Standard prior to this.
+
+# Step 1: train backward model
+python main.py --config configs/config5.json --method ua_tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs/config5.json --method ua_tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs/config5.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**UA-Tandem-Sparse:**
+```bash
+# Please note that we use UANA-Sparse mu and sigma models as the mu and sigma models in this method. So, if you have not done it yet it is required that you run step 1 and 2 of UANA-Sparse prior to this.
+
+# Step 1: train backward model
+python main.py --config configs/config4.json --method ua_tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs/config4.json --method ua_tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs/config4.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**UA-Tandem-Noisy:**
+```bash
+# Please note that we use UANA-Noisy mu and sigma models as the mu and sigma models in this method. So, if you have not done it yet it is required that you run step 1 and 2 of UANA-Noisy prior to this.
+
+# Step 1: train backward model
+python main.py --config configs/config3.json --method ua_tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs/config3.json --method ua_tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs/config3.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
 --------------------------------------------------
 --------------------------------------------------
 
