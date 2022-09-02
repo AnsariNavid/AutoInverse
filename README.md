@@ -108,6 +108,147 @@ Results will be available in the following directory: XYZ<br>
 
 (description)<br>
 
+**NA-Standard:**
+```bash
+# Step 1: train forward model
+python main.py --config configs/config5.json --method na --step train_forward_model
+
+# Step 2: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 250; inversion_repetition_id++ ))
+do
+	python main.py --config configs/config5.json --method na --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 3: aggregate results
+python main.py --config configs/config5.json --method na --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 4: evaluate results
+python main.py --config configs/config5.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**NA-Sparse:**
+```bash
+# Step 1: train forward model
+python main.py --config configs/config4.json --method na --step train_forward_model
+
+# Step 2: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 250; inversion_repetition_id++ ))
+do
+	python main.py --config configs/config4.json --method na --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 3: aggregate results
+python main.py --config configs/config4.json --method na --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 4: evaluate results
+python main.py --config configs/config4.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**NA-Noisy:**
+```bash
+# Step 1: train forward model
+python main.py --config configs/config3.json --method na --step train_forward_model
+
+# Step 2: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 250; inversion_repetition_id++ ))
+do
+	python main.py --config configs/config3.json --method na --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 3: aggregate results
+python main.py --config configs/config3.json --method na --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 4: evaluate results
+python main.py --config configs/config3.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**UANA-Standard:**
+```bash
+# Step 1: train mu models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs/config5.json --method uana --step train_mu_model --model_id $model_id
+done
+
+# Step 2: train sigma models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs/config5.json --method uana --step train_sigma_model --model_id $model_id
+done
+
+# Step 3: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 50; inversion_repetition_id++ ))
+do
+	python main.py --config configs/config5.json --method uana --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 4: aggregate results
+python main.py --config configs/config5.json --method uana --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 5: evaluate results
+python main.py --config configs/config5.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**UANA-Sparse:**
+```bash
+# Step 1: train mu models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs/config4.json --method uana --step train_mu_model --model_id $model_id
+done
+
+# Step 2: train sigma models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs/config4.json --method uana --step train_sigma_model --model_id $model_id
+done
+
+# Step 3: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 50; inversion_repetition_id++ ))
+do
+	python main.py --config configs/config4.json --method uana --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 4: aggregate results
+python main.py --config configs/config4.json --method uana --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 5: evaluate results
+python main.py --config configs/config4.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+**UANA-Noisy:**
+```bash
+# Step 1: train mu models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs/config3.json --method uana --step train_mu_model --model_id $model_id
+done
+
+# Step 2: train sigma models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs/config3.json --method uana --step train_sigma_model --model_id $model_id
+done
+
+# Step 3: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 50; inversion_repetition_id++ ))
+do
+	python main.py --config configs/config3.json --method uana --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 4: aggregate results
+python main.py --config configs/config3.json --method uana --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 5: evaluate results
+python main.py --config configs/config3.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
 #### Section C.1 (Counterpart results of tandem and UA-tandem for spectral printer) - Table 5:
 
 (description)<br>
