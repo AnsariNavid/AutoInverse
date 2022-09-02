@@ -27,8 +27,7 @@ First please download and unziping [data.zip](https://drive.google.com/file/d/1R
 
 (description)<br>
 
-
-Method NA:
+NA:
 ```bash
 # Step 1: train forward model
 python main.py --config configs\config1.json --method na --step train_forward_model
@@ -47,7 +46,7 @@ python main.py --config configs\config1.json --method na --step evaluate_results
 ```
 Results will be available in the following directory: XYZ<br>
 
-Method UANA:
+UANA:
 ```bash
 # Step 1: train mu models
 for (( model_id = 0; model_id < 10; model_id++ ))
@@ -72,6 +71,32 @@ python main.py --config configs\config1.json --method uana --step aggregate_resu
 
 # Step 6: evaluate results
 python main.py --config configs\config1.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+Tandem:
+```bash
+# Step 1: train backward model
+python main.py --config configs\config1.json --method tandem  --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs\config1.json --method tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs\config1.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
+
+UA-Tandem:
+```bash
+# Step 1: train backward model
+python main.py --config configs\config1.json --method ua_tandem --step train_backward_model --experiment_repetition_id 0
+
+# Step 2: invert target
+python main.py --config configs\config1.json --method ua_tandem --step invert_target --experiment_repetition_id 0 --target_name evaluation
+
+# Step 3: evaluate results
+python main.py --config configs\config1.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
 Results will be available in the following directory: XYZ<br>
 
