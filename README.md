@@ -1,4 +1,5 @@
 
+
 # Autoinverse
 
 --------------------------------------------------
@@ -16,9 +17,9 @@
 
 First please download and unziping [data.zip](https://drive.google.com/file/d/1RQORP1mfD37XVs3IXLl_2eX13qb_DRVS/view?usp=sharing) in the project directory.<br>
 
-*If you want to use our pre-trained networks, you can download and unziping [results.zip](https://drive.google.com/file/d/1oPBXO9ADnMSZxek9dszNl_92mAQ0efa9/view?usp=sharing) in the project directory as well, then you can skip the steps regarding training networks menthoned bellow for each experiment.*
+*If you want to use our pre-trained networks, you can download and unziping [results.zip](https://drive.google.com/file/d/1oPBXO9ADnMSZxek9dszNl_92mAQ0efa9/view?usp=sharing) in the project directory as well, then you can skip some of the steps for training networks menthoned bellow.*
 
-*You can refer to the section **Help** for more information about the each flag we used bellow.*<br>
+*Please refer to the section **Help** for more information about each flag we use bellow.*<br>
 
 *Please note that the term **Oracle** used in the code is equivalent to the term **NFP** in the paper.*<br>
 
@@ -26,11 +27,53 @@ First please download and unziping [data.zip](https://drive.google.com/file/d/1R
 
 (description)<br>
 
-For running this experiment please follow these steps:<br>
 
+Method NA:
 ```bash
+# Step 1: train forward model
+python main.py --config configs\config1.json --method na --step train_forward_model
 
+# Step 2: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 250; inversion_repetition_id++ ))
+do
+	python main.py --config configs\config1.json --method na --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 3: aggregate results
+python main.py --config configs\config1.json --method na --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 4: evaluate results
+python main.py --config configs\config1.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
+Results will be available in the following directory: XYZ<br>
+
+Method UANA:
+```bash
+# Step 1: train mu models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs\config1.json --method uana --step train_mu_model --model_id $model_id
+done
+
+# Step 2: train mu models
+for (( model_id = 0; model_id < 10; model_id++ ))
+do
+	python main.py --config configs\config1.json --method uana --step train_sigma_model --model_id $model_id
+done
+
+# Step 4: invert target
+for (( inversion_repetition_id = 0; inversion_repetition_id < 50; inversion_repetition_id++ ))
+do
+	python main.py --config configs\config1.json --method uana --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
+done
+
+# Step 5: aggregate results
+python main.py --config configs\config1.json --method uana --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
+
+# Step 6: evaluate results
+python main.py --config configs\config1.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
+```
+Results will be available in the following directory: XYZ<br>
 
 #### Section 4.3 (Neural inversion in the presence of imperfect data) - Table 2:
 
