@@ -19,7 +19,7 @@ First please download and unziping [data.zip](https://drive.google.com/file/d/1R
 
 *If you want to use our pre-trained networks, you can download and unziping [results.zip](https://drive.google.com/file/d/1oPBXO9ADnMSZxek9dszNl_92mAQ0efa9/view?usp=sharing) in the project directory as well, then you can skip some of the steps for training networks menthoned bellow.*
 
-*Please refer to the section **Help** for more information about each flag we use bellow.*<br>
+*Please refer to the section **Help** for more information about each flag we used bellow.*<br>
 
 *Please note that the term **Oracle** used in the code is equivalent to the term **NFP** in the paper.*<br>
 
@@ -27,7 +27,7 @@ First please download and unziping [data.zip](https://drive.google.com/file/d/1R
 
 (description)<br>
 
-NA:
+**NA:**
 ```bash
 # Step 1: train forward model
 python main.py --config configs\config1.json --method na --step train_forward_model
@@ -46,7 +46,7 @@ python main.py --config configs\config1.json --method na --step evaluate_results
 ```
 Results will be available in the following directory: XYZ<br>
 
-UANA:
+**UANA:**
 ```bash
 # Step 1: train mu models
 for (( model_id = 0; model_id < 10; model_id++ ))
@@ -60,22 +60,24 @@ do
 	python main.py --config configs\config1.json --method uana --step train_sigma_model --model_id $model_id
 done
 
-# Step 4: invert target
+# Step 3: invert target
 for (( inversion_repetition_id = 0; inversion_repetition_id < 50; inversion_repetition_id++ ))
 do
 	python main.py --config configs\config1.json --method uana --step invert_target --experiment_repetition_id 0 --inversion_repetition_id $inversion_repetition_id --target_name evaluation
 done
 
-# Step 5: aggregate results
+# Step 4: aggregate results
 python main.py --config configs\config1.json --method uana --step aggregate_results --experiment_repetition_id 0 --target_name evaluation
 
-# Step 6: evaluate results
+# Step 5: evaluate results
 python main.py --config configs\config1.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
 Results will be available in the following directory: XYZ<br>
 
-Tandem:
+**Tandem:**
 ```bash
+# Please note that we use NA forward model as a forward model in this method. So, if you have not done it yet it is required that you run step 1 of NA prior to this.
+
 # Step 1: train backward model
 python main.py --config configs\config1.json --method tandem  --step train_backward_model --experiment_repetition_id 0
 
@@ -87,8 +89,10 @@ python main.py --config configs\config1.json --method tandem --step evaluate_res
 ```
 Results will be available in the following directory: XYZ<br>
 
-UA-Tandem:
+**UA-Tandem:**
 ```bash
+# Please note that we use UANA mu and sigma models as mu and sigma models in this method. So, if you have not done it yet it is required that you run step 1 and 2 of UANA prior to this.
+
 # Step 1: train backward model
 python main.py --config configs\config1.json --method ua_tandem --step train_backward_model --experiment_repetition_id 0
 
