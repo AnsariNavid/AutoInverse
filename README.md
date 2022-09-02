@@ -44,7 +44,7 @@ python main.py --config configs/config1.json --method na --step aggregate_result
 # Step 4: evaluate results
 python main.py --config configs/config1.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/multi_joint_robot/config1/na/inversion/evaluation/0/aggregated/evaluation_results.json**<br>
 
 **UANA:**
 ```bash
@@ -72,7 +72,7 @@ python main.py --config configs/config1.json --method uana --step aggregate_resu
 # Step 5: evaluate results
 python main.py --config configs/config1.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/multi_joint_robot/config1/uana/inversion/evaluation/2_0.2/0/aggregated/evaluation_results.json**<br>
 
 **Tandem:**
 ```bash
@@ -87,7 +87,7 @@ python main.py --config configs/config1.json --method tandem --step invert_targe
 # Step 3: evaluate results
 python main.py --config configs/config1.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/multi_joint_robot/config1/tandem/inversion/evaluation/0/evaluation_results.json**<br>
 
 **UA-Tandem:**
 ```bash
@@ -102,7 +102,7 @@ python main.py --config configs/config1.json --method ua_tandem --step invert_ta
 # Step 3: evaluate results
 python main.py --config configs/config1.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/multi_joint_robot/config1/ua_tandem/inversion/evaluation/0.5_0.05/0/evaluation_results.json**<br>
 
 #### Section 4.3 (Neural inversion in the presence of imperfect data) - Table 2:
 
@@ -125,7 +125,7 @@ python main.py --config configs/config5.json --method na --step aggregate_result
 # Step 4: evaluate results
 python main.py --config configs/config5.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_standard/config5/na/inversion/evaluation/0/aggregated/evaluation_results.json**<br>
 
 **NA-Sparse:**
 ```bash
@@ -144,7 +144,7 @@ python main.py --config configs/config4.json --method na --step aggregate_result
 # Step 4: evaluate results
 python main.py --config configs/config4.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_sparse/config4/na/inversion/evaluation/0/aggregated/evaluation_results.json**<br>
 
 **NA-Noisy:**
 ```bash
@@ -163,7 +163,7 @@ python main.py --config configs/config3.json --method na --step aggregate_result
 # Step 4: evaluate results
 python main.py --config configs/config3.json --method na --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_noisy/config3/na/inversion/evaluation/0/aggregated/evaluation_results.json**<br>
 
 **UANA-Standard:**
 ```bash
@@ -191,7 +191,7 @@ python main.py --config configs/config5.json --method uana --step aggregate_resu
 # Step 5: evaluate results
 python main.py --config configs/config5.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_standard/config5/uana/inversion/evaluation/100_10/0/aggregated/evaluation_results.json**<br>
 
 **UANA-Sparse:**
 ```bash
@@ -219,7 +219,7 @@ python main.py --config configs/config4.json --method uana --step aggregate_resu
 # Step 5: evaluate results
 python main.py --config configs/config4.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_sparse/config4/uana/inversion/evaluation/100_10/0/aggregated/evaluation_results.json**<br>
 
 **UANA-Noisy:**
 ```bash
@@ -247,7 +247,7 @@ python main.py --config configs/config3.json --method uana --step aggregate_resu
 # Step 5: evaluate results
 python main.py --config configs/config3.json --method uana --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_noisy/config3/uana/inversion/evaluation/50_5/0/aggregated/evaluation_results.json**<br>
 
 #### Section C.1 (Counterpart results of tandem and UA-tandem for spectral printer) - Table 5:
 
