@@ -266,7 +266,7 @@ python main.py --config configs/config5.json --method tandem --step invert_targe
 # Step 3: evaluate results
 python main.py --config configs/config5.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_standard/config5/tandem/inversion/evaluation/0/evaluation_results.json**<br>
 
 **Tandem-Sparse:**
 ```bash
@@ -281,7 +281,7 @@ python main.py --config configs/config4.json --method tandem --step invert_targe
 # Step 3: evaluate results
 python main.py --config configs/config4.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_sparse/config4/tandem/inversion/evaluation/0/evaluation_results.json**<br>
 
 **Tandem-Noisy:**
 ```bash
@@ -296,7 +296,7 @@ python main.py --config configs/config3.json --method tandem --step invert_targe
 # Step 3: evaluate results
 python main.py --config configs/config3.json --method tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_noisy/config3/tandem/inversion/evaluation/0/evaluation_results.json**<br>
 
 **UA-Tandem-Standard:**
 ```bash
@@ -311,7 +311,7 @@ python main.py --config configs/config5.json --method ua_tandem --step invert_ta
 # Step 3: evaluate results
 python main.py --config configs/config5.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_standard/config5/ua_tandem/inversion/evaluation/0.5_0.05/0/evaluation_results.json**<br>
 
 **UA-Tandem-Sparse:**
 ```bash
@@ -326,7 +326,7 @@ python main.py --config configs/config4.json --method ua_tandem --step invert_ta
 # Step 3: evaluate results
 python main.py --config configs/config4.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_sparse/config4/ua_tandem/inversion/evaluation/2_0.2/0/evaluation_results.json**<br>
 
 **UA-Tandem-Noisy:**
 ```bash
@@ -341,7 +341,7 @@ python main.py --config configs/config3.json --method ua_tandem --step invert_ta
 # Step 3: evaluate results
 python main.py --config configs/config3.json --method ua_tandem --step evaluate_results --experiment_repetition_id 0 --target_name evaluation
 ```
-Results will be available in the following directory: XYZ<br>
+**Results will be available in the following directory: results/spectral_printer_noisy/config3/ua_tandem/inversion/evaluation/10_1/0/evaluation_results.json**<br>
 
 --------------------------------------------------
 --------------------------------------------------
